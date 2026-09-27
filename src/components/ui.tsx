@@ -18,6 +18,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import type { ComponentProps, ReactNode } from 'react';
 import { useTheme } from '../theme/provider';
+import { BrandLogo } from './brand-logo';
 import { useAuth } from '../features/auth/provider';
 import { displayDay, displayInstant, localDateTime, dateOnly, timeOnly } from '../domain/dates';
 import { errorMessage } from '../services/api';
@@ -330,7 +331,7 @@ export function DateField({
         {mode === 'date' ? displayDay(value) : mode === 'time' ? value : displayInstant(value)}
       </Copy>
       <Row>
-        {mode !== 'time' && <Button title="Elegir fecha" secondary onPress={() => pick('date')} />}{' '}
+        {mode !== 'time' && <Button title="Elegir fecha" secondary onPress={() => pick('date')} />}
         {mode !== 'date' && <Button title="Elegir hora" secondary onPress={() => pick('time')} />}
       </Row>
       {mode === 'datetime' && <Copy muted>Hora de Madrid</Copy>}
@@ -460,9 +461,12 @@ export function Shell({
             <Icon name="arrow-back" />
           </Pressable>
         )}
-        <Text style={{ fontSize: 20, fontWeight: '700', color: theme.text, flex: 1 }}>
-          Convivio
-        </Text>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <BrandLogo size={28} />
+          <Text style={{ fontSize: 20, fontWeight: '700', color: theme.text, flexShrink: 1 }}>
+            Convivio
+          </Text>
+        </View>
         {member && (
           <>
             <Pressable

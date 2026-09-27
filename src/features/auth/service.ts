@@ -26,9 +26,15 @@ export async function signInWithGoogle(): Promise<void> {
   const client = supabase();
   const redirectTo = makeRedirectUri({ scheme: 'convivio', path: 'auth/callback' });
   const { data, error } = await client.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo, skipBrowserRedirect: true },
-  });
+  provider: 'google',
+  options: {
+    redirectTo,
+    skipBrowserRedirect: true,
+    queryParams: {
+      prompt: 'select_account',
+    },
+  },
+});
   if (error || !data.url) throw new Error('No se ha podido abrir Google');
   const authorizationUrl = await requireS256(data.url, (value) =>
     Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, value, {

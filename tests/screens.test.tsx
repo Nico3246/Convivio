@@ -56,6 +56,7 @@ vi.mock('react-native', () => ({
 }));
 vi.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView' }));
 vi.mock('@expo/vector-icons/Ionicons', () => ({ default: 'Icon' }));
+vi.mock('../src/components/brand-logo', () => ({ BrandLogo: () => null }));
 vi.mock('@react-native-community/datetimepicker', () => ({
   DateTimePickerAndroid: { open: vi.fn() },
 }));

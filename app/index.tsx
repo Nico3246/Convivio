@@ -1,14 +1,6 @@
 import { Redirect } from 'expo-router';
-import {
-  Shell,
-  Card,
-  Copy,
-  Heading,
-  Button,
-  Notice,
-  Loading,
-  ErrorText,
-} from '../src/components/ui';
+import { Button, Notice, Loading, ErrorText } from '../src/components/ui';
+import { AccessLayout, GoogleButton } from '../src/features/auth/access-layout';
 import { useAuth } from '../src/features/auth/provider';
 import { signInWithGoogle } from '../src/features/auth/service';
 import { useCommand } from '../src/services/hooks';
@@ -18,51 +10,38 @@ export default function AccessScreen() {
     command = useCommand();
   if (auth.loading)
     return (
-      <Shell title="Convivio">
+      <AccessLayout>
         <Loading />
-      </Shell>
+      </AccessLayout>
     );
   if (auth.member) return <Redirect href="/home" />;
   return (
-    <Shell title="Convivio" subtitle="Un espacio para organizar vuestra convivencia.">
-      <Card>
-        <Heading>Bienvenido a casa</Heading>
-        <Copy>Normas claras, tareas organizadas y cuentas al día.</Copy>
-        {!isConfigured ? (
+    <AccessLayout>
+      {!isConfigured ? (
+        <Notice>El administrador debe completar la configuración del piso.</Notice>
+      ) : auth.session ? (
+        <>
           <Notice>
-            La aplicación necesita la configuración inicial del administrador para poder acceder.
+            {auth.accessError
+              ? 'No se ha podido comprobar tu acceso. Vuelve a intentarlo.'
+              : 'Esta cuenta no tiene acceso al piso.'}
           </Notice>
-        ) : auth.session ? (
-          <>
-            <Notice>
-              {auth.accessError
-                ? 'No se ha podido comprobar tu acceso. Comprueba la conexión y vuelve a intentarlo.'
-                : 'Esta cuenta no tiene acceso autorizado al piso. Consulta con el administrador.'}
-            </Notice>
-            <Button
-              title="Comprobar acceso"
-              busy={command.busy}
-              onPress={() => command.run('refresh', auth.refresh)}
-            />
-            <Button
-              title="Usar otra cuenta de Google"
-              secondary
-              busy={command.busy}
-              onPress={() => command.run('signout', auth.signOut)}
-            />
-          </>
-        ) : (
-          <>
-            <Button
-              title="Continuar con Google"
-              busy={command.busy}
-              onPress={() => command.run('signin', signInWithGoogle)}
-            />
-            <Copy muted>Solo pueden entrar las cuentas autorizadas para este piso.</Copy>
-          </>
-        )}
-        <ErrorText message={command.error} />
-      </Card>
-    </Shell>
+          <Button
+            title="Comprobar acceso"
+            busy={command.busy}
+            onPress={() => command.run('refresh', auth.refresh)}
+          />
+          <Button
+            title="Cambiar de cuenta"
+            secondary
+            busy={command.busy}
+            onPress={() => command.run('signout', auth.signOut)}
+          />
+        </>
+      ) : (
+        <GoogleButton busy={command.busy} onPress={() => command.run('signin', signInWithGoogle)} />
+      )}
+      <ErrorText message={command.error} />
+    </AccessLayout>
   );
 }

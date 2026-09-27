@@ -101,9 +101,12 @@ export function ErrorBoundary({ retry }: ErrorBoundaryProps) {
   );
 }
 export default function Screen() {
-  const params = useLocalSearchParams(),
+  const params = useLocalSearchParams<Record<string, string | string[]>>(),
     member = useMember();
-  const name = params.screen;
+
+  const rawName = params.route;
+  const name = Array.isArray(rawName) ? rawName[0] : rawName;
+
   if (!isScreen(name) || !canOpen(member.role, name))
     return (
       <Shell title="Pantalla no disponible">

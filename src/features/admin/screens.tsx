@@ -333,14 +333,14 @@ export function AuditScreen() {
                 secondary
                 onPress={() => go('rule', { id: e.rule_id! })}
               />
-            )}{' '}
+            )}
             {e.debt_id && (
               <Button
                 title="Consultar movimiento"
                 secondary
                 onPress={() => go('expense', { id: e.debt_id! })}
               />
-            )}{' '}
+            )}
             {e.exception_id && (
               <Button
                 title="Consultar excepción"

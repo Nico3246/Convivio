@@ -16,16 +16,18 @@ import {
   ErrorText,
   QueryState,
   Pager,
-  Row as LayoutRow,
   Notice,
   go,
 } from '../../components/ui';
 import { useMember } from '../auth/provider';
-import { useCommand, useRows } from '../../services/hooks';
+import { useClock, useCommand, usePageQuery, useRows } from '../../services/hooks';
 import { AppError, call } from '../../services/api';
-import { dateOnly, displayDay, displayInstant, shiftDay, weekday } from '../../domain/dates';
+import { dateOnly, displayDay, displayInstant, shiftDay } from '../../domain/dates';
 import { required, useDetail, useId, useParam, usePeople } from '../shared';
 import type { Row } from '../../services/database.types';
+import { startOfWeek } from './calendar-model';
+import { loadCalendarRows } from './calendar-data';
+import { WeeklyCalendar } from './weekly-calendar';
 
 export const days = [
   { value: '1', label: 'Lunes' },
@@ -221,73 +223,46 @@ export function ShowersScreen() {
   );
 }
 export function CalendarScreen() {
-  const today = dateOnly(),
-    people = usePeople();
-  const [start, setStart] = useState(shiftDay(today, 1 - weekday(today))),
-    [page, setPage] = useState(0);
-  const end = shiftDay(start, 7);
-  const tasks = useRows('scheduled_tasks', {
-    filters: [
-      { column: 'due_date', operator: 'gte', value: start },
-      { column: 'due_date', operator: 'lt', value: end },
-    ],
-    order: 'due_date',
-    ascending: true,
-    page,
-  });
-  const showers = useRows('shower_slots', { order: 'weekday', ascending: true, size: 200 });
+  const now = useClock();
+  const today = dateOnly(new Date(now));
+  const people = usePeople(),
+    member = useMember();
+  const [start, setStart] = useState(() => startOfWeek(dateOnly()));
+  const tasks = usePageQuery(['scheduled_tasks', 'calendar', start], (signal) =>
+    loadCalendarRows(
+      'scheduled_tasks',
+      member.household_id,
+      [
+        { column: 'due_date', operator: 'gte', value: start },
+        { column: 'due_date', operator: 'lt', value: shiftDay(start, 7) },
+      ],
+      signal,
+    ),
+  );
+  const showers = usePageQuery(['shower_slots', 'calendar'], (signal) =>
+    loadCalendarRows('shower_slots', member.household_id, [], signal),
+  );
   return (
-    <Shell title="Calendario semanal" back>
+    <Shell
+      title="Calendario semanal"
+      back
+      refresh={() => Promise.all([tasks.refetch(), showers.refetch(), people.query.refetch()])}
+    >
       <PrepareCalendar />
-      <LayoutRow>
-        <Button
-          title="Anterior"
-          secondary
-          onPress={() => {
-            setStart(shiftDay(start, -7));
-            setPage(0);
-          }}
-        />
-        <Button
-          title="Siguiente"
-          secondary
-          disabled={end > shiftDay(today, 14)}
-          onPress={() => {
-            setStart(end);
-            setPage(0);
-          }}
-        />
-      </LayoutRow>
-      <Heading>
-        {displayDay(start)} – {displayDay(shiftDay(end, -1))}
-      </Heading>
       <QueryState query={tasks}>
-        {Array.from({ length: 7 }, (_, i) => shiftDay(start, i)).map((day) => (
-          <Section key={day}>
-            <Heading>
-              {days.find((d) => Number(d.value) === weekday(day))?.label} · {displayDay(day)}
-            </Heading>
-            {showers.data?.rows
-              .filter((s) => s.weekday === weekday(day))
-              .map((s) => (
-                <Card key={s.id}>
-                  <Copy>
-                    Ducha · {s.starts_at.slice(0, 5)}–{s.ends_at.slice(0, 5)}
-                  </Copy>
-                  <Copy muted>{people.name(s.resident_id)}</Copy>
-                </Card>
-              ))}
-            {tasks.data?.rows
-              .filter((t) => t.due_date === day)
-              .map((t) => (
-                <TaskCard key={t.id} task={t} />
-              ))}
-          </Section>
-        ))}
-        <Pager page={page} count={tasks.data?.count ?? 0} onChange={setPage} />
-      </QueryState>
-      <QueryState query={showers}>
-        <Copy muted>Los turnos de ducha muestran el horario habitual vigente.</Copy>
+        <QueryState query={showers}>
+          <QueryState query={people.query}>
+            <WeeklyCalendar
+              start={start}
+              today={today}
+              tasks={tasks.data ?? []}
+              showers={showers.data ?? []}
+              name={people.name}
+              onChangeWeek={setStart}
+              renderTask={(task) => <TaskCard task={task} />}
+            />
+          </QueryState>
+        </QueryState>
       </QueryState>
     </Shell>
   );
