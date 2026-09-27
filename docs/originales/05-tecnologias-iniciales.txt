@@ -1,0 +1,994 @@
+# Convivio — Tecnologías y arquitectura V1.0
+
+## 1. Objetivo técnico
+
+La aplicación **Convivio** se desarrollará con una arquitectura que cumpla estos requisitos:
+
+- **Plataforma inicial: Android**
+- **Coste mensual: 0 €**
+- **Aplicación moderna y publicable**
+- **Escalable a futuro**
+- **Fácil de mantener**
+- **Segura por roles**
+- **Preparada para crecer sin rehacerla entera**
+
+La solución elegida buscará un equilibrio entre:
+
+- rapidez de desarrollo;
+- bajo coste;
+- buena experiencia de usuario;
+- robustez técnica.
+
+---
+
+# 2. Stack tecnológico principal
+
+## Frontend móvil
+
+- **React Native**
+- **Expo**
+- **TypeScript**
+
+## Backend / servicios cloud
+
+- **Supabase**
+
+## Base de datos
+
+- **PostgreSQL** (gestionado por Supabase)
+
+## Autenticación
+
+- **Supabase Auth**
+- **Login con Google**
+
+## Almacenamiento de imágenes
+
+- **Supabase Storage**
+
+## Lógica backend programada
+
+- **Supabase Edge Functions**
+- **Supabase Cron**
+
+## Notificaciones push
+
+- **expo-notifications**
+- **Expo Push Service**
+
+## Construcción de la app
+
+- **EAS Build**
+
+## Repositorio y control de versiones
+
+- **Git**
+- **GitHub**
+
+---
+
+# 3. Tecnologías elegidas en detalle
+
+## 3.1 Frontend móvil
+
+### React Native
+
+Será la tecnología base de la app móvil.
+
+### Motivos
+
+- permite desarrollar una app Android moderna;
+- tiene una comunidad enorme;
+- es una opción muy sólida para publicar en tiendas;
+- facilita reutilización futura si algún día quieres iOS;
+- encaja bien con tu experiencia previa.
+
+---
+
+## 3.2 Expo
+
+Expo será la capa principal sobre React Native.
+
+### Motivos
+
+- simplifica mucho el desarrollo;
+- facilita compilaciones y pruebas;
+- integra bien notificaciones, autenticación y multimedia;
+- acelera el desarrollo del MVP y de la versión final.
+
+### Versión recomendada
+
+- **Expo SDK 57 estable**
+
+Se prioriza estabilidad antes que usar una beta más reciente.
+
+---
+
+## 3.3 TypeScript
+
+Toda la aplicación se desarrollará en **TypeScript**.
+
+### Motivos
+
+- reduce errores;
+- mejora el autocompletado;
+- facilita mantener el proyecto;
+- ayuda mucho en formularios, modelos de datos y permisos.
+
+---
+
+# 4. Navegación
+
+## Expo Router
+
+La navegación de la app se construirá con:
+
+- **Expo Router**
+
+### Motivos
+
+- organización por archivos;
+- estructura clara;
+- muy buena escalabilidad;
+- ideal para una app con muchos módulos como Convivio.
+
+---
+
+# 5. Estado de la aplicación
+
+La gestión del estado se dividirá en dos niveles.
+
+## 5.1 Estado remoto / datos del servidor
+
+- **TanStack Query**
+
+Se utilizará para:
+
+- cargar datos;
+- cachearlos;
+- refrescarlos;
+- invalidar consultas;
+- sincronizar vistas tras cambios.
+
+### Ejemplos de uso
+
+- faltas;
+- normas;
+- tareas;
+- deudas;
+- productos;
+- resumen semanal.
+
+---
+
+## 5.2 Estado local de interfaz
+
+- **Zustand**
+
+Se utilizará para estado ligero de UI.
+
+### Ejemplos de uso
+
+- filtros activos;
+- usuario actual en memoria;
+- tema claro/oscuro;
+- estados visuales temporales;
+- preferencias locales.
+
+---
+
+# 6. Formularios y validación
+
+## React Hook Form
+
+Se utilizará para construir formularios.
+
+## Zod
+
+Se utilizará para validar los datos.
+
+### Motivos
+
+Este combo es ideal para pantallas como:
+
+- nueva falta;
+- nueva queja;
+- registrar gasto;
+- crear norma;
+- solicitar excepción;
+- crear tarea;
+- añadir producto.
+
+### Ventajas
+
+- formularios limpios;
+- validaciones robustas;
+- código reutilizable;
+- tipado consistente entre frontend y backend.
+
+---
+
+# 7. Base de datos
+
+## PostgreSQL en Supabase
+
+Convivio usará una base de datos relacional.
+
+### Motivos
+
+La app tiene mucha información conectada entre sí:
+
+- usuarios;
+- roles;
+- normas;
+- versiones de normas;
+- faltas;
+- comentarios;
+- quejas;
+- excepciones;
+- tareas;
+- turnos;
+- inventarios;
+- listas;
+- compras;
+- deudas;
+- pagos;
+- auditoría.
+
+Todo esto encaja mejor en SQL que en bases de datos tipo documento.
+
+---
+
+# 8. Autenticación
+
+## Supabase Auth
+
+La autenticación se hará mediante:
+
+- **inicio de sesión con Google**
+
+### Motivos
+
+- elimina formularios de contraseña;
+- simplifica la experiencia;
+- es cómodo para los 3 usuarios;
+- reduce carga de mantenimiento.
+
+### Comportamiento
+
+- solo podrán entrar correos autorizados;
+- no habrá registro libre;
+- el rol se asignará desde la base de datos.
+
+---
+
+# 9. Roles y seguridad
+
+Convivio manejará tres roles:
+
+- **ADMIN**
+- **RESIDENT**
+- **CONTROLLER**
+
+## 9.1 Control visual en la app
+
+La interfaz mostrará u ocultará opciones según el rol.
+
+## 9.2 Protección real en backend
+
+La seguridad no dependerá solo del frontend.
+
+Se aplicará protección a nivel de base de datos mediante:
+
+- **Row Level Security (RLS)**
+
+### Objetivo
+
+Aunque alguien intentara manipular la aplicación, el servidor seguirá impidiendo acciones no permitidas.
+
+---
+
+# 10. Permisos por rol
+
+## ADMIN
+
+Podrá:
+
+- gestionar usuarios;
+- crear normas;
+- proponer cambios de normas;
+- crear tareas;
+- crear turnos;
+- configurar la aplicación;
+- consultar auditoría.
+
+## RESIDENT
+
+Podrá:
+
+- registrar faltas;
+- registrar quejas;
+- comentar faltas;
+- consultar normas;
+- gestionar tareas;
+- gestionar inventario;
+- registrar gastos;
+- consultar y pagar deudas;
+- solicitar excepciones.
+
+## CONTROLLER
+
+Podrá:
+
+- consultar faltas;
+- consultar quejas;
+- consultar pruebas;
+- mantener o invalidar faltas;
+- aprobar o rechazar excepciones;
+- aprobar modificaciones de normas existentes.
+
+No podrá acceder a:
+
+- inventario;
+- listas de compra;
+- gastos;
+- deudas;
+- apartados económicos.
+
+---
+
+# 11. Almacenamiento de imágenes
+
+## Supabase Storage
+
+Se utilizará para almacenar:
+
+- fotos de faltas;
+- fotos de quejas;
+- fotos de tickets;
+- imágenes necesarias del sistema.
+
+### Estructura sugerida
+
+- `fault-evidence/`
+- `complaint-evidence/`
+- `receipts/`
+- `avatars/`
+
+---
+
+# 12. Compresión de imágenes
+
+Antes de subir una imagen se procesará en el móvil.
+
+## Librería
+
+- **expo-image-manipulator**
+
+### Objetivos
+
+- reducir tamaño;
+- mejorar velocidad de subida;
+- ahorrar almacenamiento;
+- mantener calidad suficiente para pruebas.
+
+### Flujo
+
+```text id="u6z9ui"
+Imagen original
+      ↓
+Redimensión
+      ↓
+Compresión
+      ↓
+Subida a Supabase Storage
+      ↓
+Guardar URL/path en la base de datos
+```
+
+---
+
+# 13. Lógica backend
+
+## Supabase Edge Functions
+
+Se utilizarán para la lógica que no debe vivir solo en el frontend.
+
+### Ejemplos
+
+- generar informe semanal;
+- enviar notificaciones push;
+- validar acciones administrativas;
+- procesar reglas automáticas;
+- ejecutar operaciones sensibles.
+
+### Motivos
+
+- separa mejor responsabilidades;
+- evita duplicar lógica;
+- mejora la seguridad;
+- permite automatizaciones sin servidor propio.
+
+---
+
+# 14. Tareas programadas
+
+## Supabase Cron
+
+Permitirá programar procesos automáticos.
+
+### Uso principal
+
+- generar el resumen semanal cada sábado a las 12:00.
+
+### Otros usos futuros
+
+- limpieza de datos temporales;
+- recordatorios;
+- tareas de mantenimiento.
+
+### Flujo previsto
+
+```text id="i2fj5y"
+Sábado 12:00
+      ↓
+Cron
+      ↓
+Edge Function
+      ↓
+Se genera el informe
+      ↓
+Se guarda en base de datos
+      ↓
+Se envían notificaciones push
+```
+
+---
+
+# 15. Notificaciones push
+
+## Tecnología
+
+- **expo-notifications**
+- **Expo Push Service**
+
+## Casos de uso
+
+### Se enviarán notificaciones para:
+
+- resumen semanal disponible;
+- nueva solicitud de excepción;
+- solicitud aprobada;
+- solicitud rechazada.
+
+### No se enviarán notificaciones para:
+
+- nueva falta;
+- nueva queja;
+- nuevo comentario.
+
+Esto sigue el comportamiento definido funcionalmente.
+
+---
+
+# 16. Construcción e instalación
+
+## EAS Build
+
+Se utilizará para generar:
+
+- APK de pruebas;
+- builds internas;
+- AAB de publicación futura.
+
+### Motivos
+
+- simplifica el proceso;
+- evita configurar Android nativo manualmente desde cero;
+- encaja perfectamente con Expo.
+
+---
+
+# 17. Coste del proyecto
+
+## Objetivo económico
+
+**0 € al mes**
+
+## Herramientas elegidas pensando en ese objetivo
+
+- React Native → gratis
+- Expo → gratis
+- Supabase free tier → gratis
+- GitHub → gratis
+- EAS Build → usable en plan gratuito para este proyecto
+- Expo Push → sin coste directo en este contexto
+
+### Conclusión
+
+La arquitectura de Convivio es compatible con un desarrollo y uso real sin coste mensual.
+
+---
+
+# 18. Por qué no se usará un backend propio tradicional
+
+Aunque sería posible utilizar tecnologías como:
+
+- FastAPI;
+- Node.js + Express;
+- Django;
+- Spring Boot;
+
+para Convivio **no es la mejor opción en V1**.
+
+## Razones
+
+Montar un backend propio implicaría gestionar por separado:
+
+- hosting;
+- API;
+- autenticación;
+- base de datos;
+- almacenamiento;
+- tareas programadas;
+- despliegue;
+- seguridad.
+
+Eso añade complejidad innecesaria para una app de 3 usuarios con coste 0 €.
+
+Supabase permite resolver todo esto en una sola plataforma, manteniendo buena calidad técnica.
+
+---
+
+# 19. Por qué no se usará Firebase como solución principal
+
+Firebase sería viable, pero no es la opción preferida para Convivio.
+
+## Motivos
+
+La app tiene mucha estructura relacional:
+
+- faltas ligadas a normas;
+- normas con versiones;
+- compras que generan deudas;
+- deudas con pagos parciales;
+- tareas con turnos;
+- historial y auditoría.
+
+Este tipo de dominio encaja mejor en PostgreSQL que en Firestore.
+
+Por eso se elige:
+
+- **Supabase + PostgreSQL**
+en lugar de
+- **Firebase + Firestore**
+
+---
+
+# 20. Principios de arquitectura
+
+La arquitectura de Convivio seguirá estos principios.
+
+## 20.1 Separación por capas
+
+- presentación;
+- lógica de cliente;
+- acceso a datos;
+- lógica de backend;
+- persistencia.
+
+## 20.2 Modularidad
+
+Cada área del sistema estará separada por dominios funcionales.
+
+## 20.3 Seguridad real
+
+Los permisos se comprobarán también en backend.
+
+## 20.4 Escalabilidad
+
+Aunque hoy sean solo 3 usuarios, el código no se diseñará como un proyecto “parcheado”.
+
+## 20.5 Mantenibilidad
+
+Se priorizará una estructura limpia, legible y fácil de ampliar.
+
+---
+
+# 21. Estructura modular propuesta
+
+```text id="4k6hde"
+CONVIVIO
+│
+├── app
+│   ├── (auth)
+│   ├── (resident)
+│   ├── (controller)
+│   └── modal screens
+│
+├── src
+│   ├── components
+│   ├── features
+│   │   ├── auth
+│   │   ├── users
+│   │   ├── rules
+│   │   ├── faults
+│   │   ├── complaints
+│   │   ├── exceptions
+│   │   ├── tasks
+│   │   ├── schedules
+│   │   ├── inventory
+│   │   ├── shopping
+│   │   ├── expenses
+│   │   ├── debts
+│   │   ├── weekly-reports
+│   │   └── audit
+│   │
+│   ├── services
+│   ├── lib
+│   ├── store
+│   ├── hooks
+│   ├── theme
+│   ├── utils
+│   └── types
+│
+└── supabase
+    ├── migrations
+    ├── seed
+    ├── functions
+    └── policies
+```
+
+---
+
+# 22. Arquitectura general del sistema
+
+```text id="muk3x1"
+CONVIVIO
+│
+├── App Android
+│   ├── React Native
+│   ├── Expo
+│   ├── TypeScript
+│   ├── Expo Router
+│   ├── TanStack Query
+│   ├── Zustand
+│   ├── React Hook Form
+│   └── Zod
+│
+│          HTTPS
+│            ↓
+│
+└── Supabase
+    │
+    ├── Auth
+    │   └── Google Sign-In
+    │
+    ├── PostgreSQL
+    │   ├── users
+    │   ├── roles
+    │   ├── rules
+    │   ├── rule_versions
+    │   ├── faults
+    │   ├── fault_comments
+    │   ├── complaints
+    │   ├── visit_exceptions
+    │   ├── tasks
+    │   ├── schedules
+    │   ├── inventory_items
+    │   ├── shopping_lists
+    │   ├── purchases
+    │   ├── expenses
+    │   ├── debts
+    │   ├── debt_payments
+    │   ├── weekly_reports
+    │   └── audit_logs
+    │
+    ├── Storage
+    │   ├── fault-evidence
+    │   ├── complaint-evidence
+    │   ├── receipts
+    │   └── avatars
+    │
+    ├── Row Level Security
+    │
+    ├── Edge Functions
+    │   ├── generate-weekly-report
+    │   ├── send-push-notifications
+    │   ├── process-exception-decision
+    │   └── admin-operations
+    │
+    └── Cron
+        └── Saturday 12:00
+```
+
+---
+
+# 23. Entidades principales de la base de datos
+
+La base de datos deberá contemplar, como mínimo, las siguientes entidades:
+
+- `users`
+- `roles`
+- `households` *(aunque inicialmente solo exista uno, conviene dejarlo preparado)*
+- `rules`
+- `rule_versions`
+- `faults`
+- `fault_comments`
+- `complaints`
+- `visit_exceptions`
+- `tasks`
+- `task_assignments`
+- `schedules`
+- `inventory_items`
+- `shopping_lists`
+- `shopping_list_items`
+- `expenses`
+- `expense_participants`
+- `debts`
+- `debt_payments`
+- `weekly_reports`
+- `notifications`
+- `audit_logs`
+
+---
+
+# 24. Tratamiento de faltas
+
+Cuando el controlador invalide una falta, no se hará un borrado físico.
+
+## En lugar de eliminar definitivamente:
+
+se cambiará su estado.
+
+### Estados sugeridos
+
+- `REGISTERED`
+- `CONFIRMED`
+- `DISMISSED`
+
+## Ventajas
+
+- mantiene historial;
+- mejora la auditoría;
+- evita pérdida real de datos;
+- permite reconstruir eventos si hiciera falta.
+
+---
+
+# 25. Flujo técnico del informe semanal
+
+```text id="pytlln"
+Usuarios usan la app
+        ↓
+Se registran faltas, quejas, tareas, gastos...
+        ↓
+Sábado 12:00
+        ↓
+Supabase Cron ejecuta Edge Function
+        ↓
+La función consulta la base de datos
+        ↓
+Genera informe semanal
+        ↓
+Guarda el informe
+        ↓
+Envía push notification
+        ↓
+Usuarios abren "Resumen semanal disponible"
+```
+
+---
+
+# 26. Flujo técnico de subida de imágenes
+
+```text id="lqm8m9"
+Usuario selecciona o hace una foto
+        ↓
+App comprime la imagen
+        ↓
+Se sube a Supabase Storage
+        ↓
+Se obtiene la ruta del archivo
+        ↓
+Se guarda en PostgreSQL asociada al registro
+```
+
+---
+
+# 27. Flujo técnico de autenticación
+
+```text id="wnpqwx"
+Abrir app
+   ↓
+Login con Google
+   ↓
+Supabase Auth valida identidad
+   ↓
+Se busca el usuario en la base de datos
+   ↓
+Se obtiene su rol
+   ↓
+La app carga navegación correspondiente
+```
+
+---
+
+# 28. Flujo técnico de permisos
+
+```text id="fd4v4z"
+Usuario intenta realizar acción
+        ↓
+Frontend muestra u oculta UI según rol
+        ↓
+Se envía petición al backend
+        ↓
+RLS / función valida permisos reales
+        ↓
+Se permite o se rechaza la operación
+```
+
+---
+
+# 29. Modo de desarrollo recomendado
+
+## Herramientas
+
+- Visual Studio Code
+- Android Studio (emulador)
+- Supabase CLI
+- Expo CLI
+- GitHub
+
+## Desarrollo local
+
+- frontend en Expo
+- backend y base de datos en Supabase
+- variables de entorno para claves y URLs
+
+---
+
+# 30. Variables de entorno previstas
+
+Ejemplo conceptual:
+
+- `EXPO_PUBLIC_SUPABASE_URL`
+- `EXPO_PUBLIC_SUPABASE_ANON_KEY`
+- `EXPO_PUBLIC_APP_NAME`
+- `EXPO_PUBLIC_ENV`
+
+Y, del lado privado/backend:
+
+- claves de servicio internas de Supabase;
+- secretos de funciones;
+- configuración de notificaciones.
+
+---
+
+# 31. Temas y design system
+
+La implementación frontend incorporará desde el principio:
+
+- tema claro;
+- tema oscuro;
+- sistema de colores;
+- tipografías;
+- componentes reutilizables.
+
+Esto facilitará llevar a código la UI que ya definimos para **Convivio**.
+
+---
+
+# 32. Librerías auxiliares recomendadas
+
+## UI y desarrollo
+
+- `react-native-safe-area-context`
+- `react-native-screens`
+- `react-native-reanimated`
+- `react-native-gesture-handler`
+
+## Utilidades
+
+- `date-fns`
+- `lucide-react-native`
+
+## Multimedia
+
+- `expo-image-picker`
+- `expo-image-manipulator`
+
+## Notificaciones
+
+- `expo-notifications`
+
+## Autenticación y almacenamiento
+
+- cliente oficial de Supabase para JavaScript.
+
+---
+
+# 33. Ventajas de esta arquitectura
+
+## Ventajas principales
+
+- coste mensual 0 €;
+- segura;
+- moderna;
+- rápida de desarrollar;
+- mantenible;
+- preparada para crecer;
+- sin necesidad de servidor propio.
+
+## Ventajas para tu caso concreto
+
+- encaja con tu experiencia previa;
+- simplifica muchísimo el backend;
+- permite centrarte más en producto y experiencia de usuario;
+- facilita iteraciones rápidas.
+
+---
+
+# 34. Stack definitivo aprobado para Convivio
+
+## Frontend
+
+- React Native
+- Expo SDK 57
+- TypeScript
+- Expo Router
+- TanStack Query
+- Zustand
+- React Hook Form
+- Zod
+- Lucide Icons
+- date-fns
+
+## Backend / Cloud
+
+- Supabase
+  - PostgreSQL
+  - Auth
+  - Storage
+  - Row Level Security
+  - Edge Functions
+  - Cron
+
+## Notificaciones
+
+- expo-notifications
+- Expo Push Service
+
+## DevOps / builds
+
+- Git
+- GitHub
+- EAS Build
+
+## Plataforma inicial
+
+- Android
+
+---
+
+# 35. Decisión final
+
+La arquitectura oficial de **Convivio V1.0** será:
+
+### App móvil
+**React Native + Expo + TypeScript**
+
+### Datos y backend
+**Supabase + PostgreSQL + Auth + Storage + RLS + Edge Functions + Cron**
+
+### Notificaciones
+**expo-notifications + Expo Push Service**
+
+### Build y despliegue
+**EAS Build**
+
+### Objetivo económico
+**0 € al mes**
+
+### Objetivo funcional
+**Aplicación Android moderna, segura y escalable**

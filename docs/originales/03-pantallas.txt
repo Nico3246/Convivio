@@ -1,0 +1,1450 @@
+# Arquitectura de pantallas y wireframes — V1.0
+
+## 1. Enfoque general de interfaz
+
+La aplicación deberá ser rápida de usar y evitar menús excesivamente profundos.
+
+La navegación principal de los residentes tendrá cinco secciones:
+
+**Inicio · Convivencia · Casa · Compra · Dinero**
+
+El administrador tendrá además acceso a:
+
+**Administración**
+
+Este acceso no aparecerá como una sexta pestaña inferior, para no sobrecargar la navegación. Estará dentro del menú de perfil.
+
+---
+
+# 2. Navegación inferior
+
+Barra inferior permanente:
+
+🏠 **Inicio**
+
+⚖️ **Convivencia**
+
+🧹 **Casa**
+
+🛒 **Compra**
+
+💶 **Dinero**
+
+La sección activa deberá quedar claramente resaltada.
+
+---
+
+# 3. Cabecera global
+
+En la parte superior aparecerá:
+
+**Nombre de la pantalla**
+
+y a la derecha:
+
+🔔 Notificaciones
+
+👤 Perfil
+
+Ejemplo:
+
+**Inicio                           🔔 👤**
+
+---
+
+# 4. Pantalla de Inicio
+
+Será la pantalla principal de uso diario.
+
+No debe convertirse en un panel excesivamente cargado.
+
+## Wireframe
+
+```text
+┌─────────────────────────────────┐
+│ Buenos días, Usuario       🔔 👤 │
+├─────────────────────────────────┤
+│                                 │
+│ HOY                             │
+│                                 │
+│ 🚿 Próxima ducha                │
+│ 20:30 - 20:50                   │
+│                                 │
+│ 🗑 Basura                       │
+│ Te corresponde hoy             │
+│                                 │
+│ 🧹 Tarea pendiente              │
+│ Limpiar cocina                  │
+│                                 │
+├─────────────────────────────────┤
+│ CONVIVENCIA                     │
+│                                 │
+│ [ + Añadir falta ]              │
+│ [ + Añadir queja ]              │
+│                                 │
+├─────────────────────────────────┤
+│ COMPRA                          │
+│                                 │
+│ 4 productos pendientes          │
+│ Ver listas >                    │
+│                                 │
+├─────────────────────────────────┤
+│ DINERO                          │
+│                                 │
+│ Debes 14,50 €                   │
+│ Ver balance >                   │
+│                                 │
+└─────────────────────────────────┘
+
+ 🏠       ⚖️       🧹       🛒      💶
+Inicio Convivencia Casa   Compra  Dinero
+```
+
+---
+
+# 5. Acciones rápidas
+
+Los botones más importantes de toda la aplicación serán:
+
+**+ Añadir falta**
+
+**+ Añadir queja**
+
+Deben ser visibles desde Inicio sin entrar en ningún menú.
+
+Registrar un incumplimiento no debería requerir más de unos pocos segundos.
+
+---
+
+# 6. Pantalla Convivencia
+
+Al entrar aparecerán cinco tarjetas.
+
+```text
+┌─────────────────────────────────┐
+│ Convivencia                🔔 👤 │
+├─────────────────────────────────┤
+│                                 │
+│ 📜 Normas                       │
+│ Consulta las normas vigentes    │
+│                              >  │
+│                                 │
+│ ⚠️ Faltas                       │
+│ Histórico y estadísticas        │
+│                              >  │
+│                                 │
+│ 💬 Quejas                       │
+│ Problemas de convivencia        │
+│                              >  │
+│                                 │
+│ 🛏 Excepciones de visitas       │
+│ Solicitudes y autorizaciones    │
+│                              >  │
+│                                 │
+│ 📊 Resumen semanal              │
+│ Último informe                  │
+│                              >  │
+│                                 │
+└─────────────────────────────────┘
+```
+
+---
+
+# 7. Pantalla Normas
+
+En la parte superior aparecerán tres categorías.
+
+```text
+Normas
+
+[ Horarios ] [ Visitas ] [ Espacios ]
+```
+
+Debajo aparecerán tarjetas.
+
+Ejemplo:
+
+```text
+┌─────────────────────────────────┐
+│ Silencio nocturno               │
+│                                 │
+│ Lunes a viernes                 │
+│ 22:00 - 05:30                   │
+│                                 │
+│ Durante este periodo deberá...  │
+│                                 │
+│ Vigente desde 24/09/2026        │
+└─────────────────────────────────┘
+```
+
+---
+
+# 8. Detalle de norma
+
+```text
+← Silencio nocturno
+
+Categoría
+Horarios y silencio
+
+Horario
+22:00 - 05:30
+
+Días
+Lunes - Viernes
+
+Descripción
+
+Durante este periodo deberá
+mantenerse silencio completo...
+
+Última actualización
+24/09/2026
+```
+
+Para usuarios normales será únicamente lectura.
+
+---
+
+# 9. Pantalla Registrar falta
+
+Esta será una de las pantallas críticas.
+
+Debe ser especialmente sencilla.
+
+```text
+← Registrar falta
+
+¿Quién ha incumplido?
+
+[ Usuario A ▼ ]
+
+Norma incumplida
+
+[ Seleccionar norma ▼ ]
+
+Fecha
+
+24/09/2026
+
+Hora
+
+18:42
+
+Descripción
+
+┌─────────────────────────────────┐
+│ Describe brevemente lo ocurrido │
+│                                 │
+└─────────────────────────────────┘
+
+Prueba fotográfica
+
+[ 📷 Cámara ] [ 🖼 Galería ]
+
+         [ Registrar falta ]
+```
+
+---
+
+# 10. Confirmación de falta
+
+Después de registrar:
+
+```text
+✓ Falta registrada
+
+La falta se incluirá en el
+próximo resumen semanal.
+
+[ Ver falta ]
+
+[ Volver al inicio ]
+```
+
+No deberá enviarse ninguna notificación al otro residente.
+
+---
+
+# 11. Pantalla Faltas
+
+Parte superior:
+
+```text
+Faltas
+
+[ Todas ] [ Usuario A ] [ Usuario B ]
+
+Semana ▼
+```
+
+Debajo:
+
+```text
+┌─────────────────────────────────┐
+│ Usuario B                       │
+│ Silencio nocturno               │
+│                                 │
+│ 23/09/2026 · 23:18              │
+│                                 │
+│ Música audible desde la...      │
+│                                 │
+│ 📷 Prueba                       │
+│                                 │
+│ Registrada                      │
+└─────────────────────────────────┘
+```
+
+---
+
+# 12. Estado visual de faltas
+
+Se utilizarán tres estados:
+
+**Pendiente de revisión**
+
+**Mantenida**
+
+**Eliminada**
+
+Las eliminadas no aparecerán por defecto en el histórico normal.
+
+Podrán visualizarse desde filtros administrativos.
+
+---
+
+# 13. Detalle de falta
+
+```text
+← Falta
+
+Usuario
+Usuario B
+
+Norma
+Silencio nocturno
+
+Fecha
+23/09/2026 · 23:18
+
+Registrada por
+Usuario A
+
+Descripción
+
+Música audible desde la
+habitación durante el horario...
+
+Prueba
+
+[ Imagen ]
+
+────────────────────
+
+Comentarios
+
+Usuario A · 23:20
+Se escuchaba desde el pasillo.
+
+[ Añadir comentario ]
+```
+
+---
+
+# 14. Estadísticas
+
+Dentro de Faltas habrá una pestaña:
+
+**Estadísticas**
+
+```text
+Usuario A
+
+Esta semana
+2 faltas
+
+Este mes
+5 faltas
+
+Total
+12 faltas
+
+Faltas por categoría
+
+Horario y silencio    7
+Espacios comunes      4
+Visitas               1
+```
+
+Más adelante podrán añadirse gráficos.
+
+---
+
+# 15. Registrar queja
+
+```text
+← Nueva queja
+
+Tipo
+
+○ General
+○ Dirigida a una persona
+
+Persona
+[ Usuario B ▼ ]
+
+Título
+
+[ Cocina constantemente sucia ]
+
+Descripción
+
+┌─────────────────────────────────┐
+│ Explica el problema...          │
+└─────────────────────────────────┘
+
+Foto opcional
+
+[ 📷 Cámara ] [ 🖼 Galería ]
+
+          [ Registrar queja ]
+```
+
+---
+
+# 16. Lista de quejas
+
+```text
+Quejas
+
+┌─────────────────────────────────┐
+│ Cocina sin recoger              │
+│                                 │
+│ Usuario A → General             │
+│ 23/09/2026                      │
+│                                 │
+│ Durante varios días...          │
+│                              >  │
+└─────────────────────────────────┘
+```
+
+---
+
+# 17. Excepciones de visitas
+
+Pantalla:
+
+```text
+Excepciones
+
+[ + Solicitar excepción ]
+
+────────────────────
+
+Pendientes
+
+10 octubre
+
+Solicitada por Usuario A
+
+Otro residente
+✓ Aprobada
+
+Controlador
+⏳ Pendiente
+
+Estado
+PENDIENTE
+```
+
+---
+
+# 18. Solicitar excepción
+
+```text
+← Nueva excepción
+
+Fecha
+
+[ 10/10/2026 ]
+
+Visitante
+
+[ Nombre ]
+
+Motivo
+
+┌─────────────────────────────────┐
+│ Describe el motivo...           │
+└─────────────────────────────────┘
+
+        [ Enviar solicitud ]
+```
+
+---
+
+# 19. Pantalla Casa
+
+```text
+Casa
+
+┌─────────────────────────────────┐
+│ 📅 Calendario                   │
+│ Turnos y tareas                 │
+│                              >  │
+├─────────────────────────────────┤
+│ 🚿 Duchas                       │
+│ Horarios                        │
+│                              >  │
+├─────────────────────────────────┤
+│ 🧹 Limpieza                     │
+│ Cocina · Baño · Pasillo         │
+│                              >  │
+├─────────────────────────────────┤
+│ 🗑 Basura                       │
+│ Turnos                          │
+│                              >  │
+├─────────────────────────────────┤
+│ ✅ Tareas                       │
+│ Pendientes y realizadas         │
+│                              >  │
+└─────────────────────────────────┘
+```
+
+---
+
+# 20. Calendario doméstico
+
+La vista principal será semanal.
+
+```text
+Semana 21 - 27 septiembre
+
+      L   M   X   J   V   S   D
+
+           [día seleccionado]
+
+MIÉRCOLES 23
+
+🚿 20:00
+Ducha Usuario A
+
+🚿 20:30
+Ducha Usuario B
+
+🧹
+Limpiar cocina
+Usuario A
+
+🗑
+Tirar basura
+Usuario B
+```
+
+---
+
+# 21. Pantalla Duchas
+
+```text
+Duchas
+
+Hoy
+
+Usuario A
+20:00 - 20:20
+
+Usuario B
+20:20 - 20:40
+
+────────────────────
+
+Mañana
+
+Usuario A
+20:20 - 20:40
+
+Usuario B
+20:00 - 20:20
+```
+
+Podrán alternarse los horarios si así se configura.
+
+---
+
+# 22. Pantalla Tareas
+
+Dos pestañas:
+
+**Pendientes**
+
+**Realizadas**
+
+Ejemplo:
+
+```text
+Pendientes
+
+┌─────────────────────────────────┐
+│ Limpiar baño                    │
+│                                 │
+│ Hoy                             │
+│ Responsable: Usuario A          │
+│                                 │
+│ [ Marcar como realizada ]       │
+└─────────────────────────────────┘
+```
+
+---
+
+# 23. Pantalla Basura
+
+```text
+Basura
+
+Hoy
+
+🗑 Usuario B
+
+[ Marcar como realizada ]
+
+────────────────────
+
+Próximos turnos
+
+Viernes
+Usuario A
+
+Domingo
+Usuario B
+```
+
+---
+
+# 24. Pantalla Compra
+
+```text
+Compra
+
+┌─────────────────────────────────┐
+│ 🥛 Mi comida                    │
+│ Inventario personal             │
+│                              >  │
+├─────────────────────────────────┤
+│ 🍽 Compartido                   │
+│ Comida común                    │
+│                              >  │
+├─────────────────────────────────┤
+│ 🧻 Hogar                        │
+│ Productos comunes               │
+│                              >  │
+├─────────────────────────────────┤
+│ 📝 Listas de compra             │
+│                              >  │
+└─────────────────────────────────┘
+```
+
+---
+
+# 25. Inventario personal
+
+```text
+Mi comida
+
+[ Buscar producto... ]
+
+[ + Añadir producto ]
+
+────────────────────
+
+Leche
+
+2 litros
+
+[ - ]  2  [ + ]
+
+────────────────────
+
+Huevos
+
+8 unidades
+
+[ - ]  8  [ + ]
+```
+
+---
+
+# 26. Producto agotado
+
+Cuando una cantidad llegue a cero:
+
+```text
+Leche
+
+AGOTADO
+
+[ Añadir a mi lista ]
+```
+
+Para productos compartidos:
+
+```text
+Papel higiénico
+
+AGOTADO
+
+[ Añadir a lista del hogar ]
+```
+
+---
+
+# 27. Listas de compra
+
+Parte superior:
+
+```text
+Listas
+
+[ Personal ] [ Compartida ] [ Hogar ]
+```
+
+Ejemplo:
+
+```text
+☐ Leche
+  2 litros
+
+☐ Arroz
+  1 kg
+
+☑ Detergente
+  Comprado
+```
+
+---
+
+# 28. Añadir elemento a lista
+
+```text
++ Producto
+
+Nombre
+
+[ Leche ]
+
+Cantidad
+
+[ 2 ]
+
+Unidad
+
+[ Litros ▼ ]
+
+          [ Añadir ]
+```
+
+---
+
+# 29. Pantalla Dinero
+
+```text
+Dinero
+
+┌─────────────────────────────────┐
+│ BALANCE                         │
+│                                 │
+│ Debes                           │
+│ 14,50 €                         │
+│                                 │
+└─────────────────────────────────┘
+
+[ + Registrar gasto ]
+
+[ + Añadir deuda ]
+
+────────────────────
+
+Gastos
+
+Deudas
+
+Historial
+```
+
+---
+
+# 30. Balance positivo
+
+Si el resultado fuera contrario:
+
+```text
+Te deben
+
+28,30 €
+```
+
+Debe evitarse mostrar simultáneamente muchas pequeñas deudas cuando puedan simplificarse.
+
+---
+
+# 31. Registrar gasto
+
+```text
+← Registrar gasto
+
+Concepto
+
+[ Compra supermercado ]
+
+Importe
+
+[ 38,40 € ]
+
+Fecha
+
+[ 24/09/2026 ]
+
+Participantes
+
+☑ Usuario A
+☑ Usuario B
+
+Ticket
+
+[ 📷 Añadir ]
+
+Productos
+Opcional
+
+         [ Registrar gasto ]
+```
+
+---
+
+# 32. Confirmación del reparto
+
+Antes de guardar:
+
+```text
+Resumen
+
+Total
+38,40 €
+
+Tu parte
+19,20 €
+
+Parte Usuario B
+19,20 €
+
+Usuario B deberá:
+
+19,20 €
+
+       [ Confirmar ]
+```
+
+---
+
+# 33. Deudas
+
+```text
+Deudas
+
+Saldo actual
+
+Usuario B te debe
+24,50 €
+
+────────────────────
+
+Movimientos
+
+Supermercado
++ 19,20 €
+
+Cena
++ 8,00 €
+
+Pago recibido
+- 2,70 €
+```
+
+---
+
+# 34. Registrar pago
+
+```text
+Registrar pago
+
+Deuda pendiente
+24,50 €
+
+Importe recibido
+
+[ 10,00 € ]
+
+Después del pago
+
+14,50 €
+
+          [ Confirmar ]
+```
+
+---
+
+# 35. Resumen semanal
+
+Será accesible desde Convivencia.
+
+```text
+Resumen semanal
+
+14 - 20 septiembre
+
+────────────────────
+
+⚠️ FALTAS
+
+Usuario A
+2
+
+Usuario B
+1
+
+[ Ver faltas ]
+
+────────────────────
+
+💬 QUEJAS
+
+2 nuevas
+
+[ Ver quejas ]
+
+────────────────────
+
+🧹 CASA
+
+6 tareas realizadas
+1 pendiente
+
+────────────────────
+
+💶 DINERO
+
+Gastos comunes
+64,20 €
+
+Balance
+Debes 12,40 €
+```
+
+---
+
+# 36. Pantalla del controlador
+
+El controlador no necesita toda la aplicación.
+
+Su Inicio será:
+
+```text
+Control de convivencia
+
+Semana actual
+
+⚠️ 3 faltas pendientes
+
+💬 2 quejas
+
+🛏 1 excepción pendiente
+
+────────────────────
+
+[ Revisar faltas ]
+
+[ Ver quejas ]
+
+[ Excepciones ]
+
+[ Informes anteriores ]
+```
+
+---
+
+# 37. Revisión de falta por controlador
+
+```text
+← Revisar falta
+
+Usuario B
+
+Silencio nocturno
+
+23/09/2026 · 23:18
+
+Descripción
+...
+
+Prueba
+[ Foto ]
+
+Comentarios
+...
+
+────────────────────
+
+[ Mantener falta ]
+
+[ Eliminar falta ]
+```
+
+Eliminar deberá requerir una segunda confirmación.
+
+---
+
+# 38. Administración
+
+Acceso:
+
+**Perfil > Administración**
+
+Pantalla:
+
+```text
+Administración
+
+👥 Usuarios
+
+📜 Normas
+
+📅 Turnos
+
+🧹 Tareas
+
+⚙ Configuración
+
+🕘 Auditoría
+```
+
+---
+
+# 39. Gestión de normas
+
+```text
+Normas
+
+[ + Nueva norma ]
+
+────────────────────
+
+Silencio nocturno
+Activa
+[ Editar ]
+
+Visitas
+Activa
+[ Editar ]
+
+Uso de cocina
+Activa
+[ Editar ]
+```
+
+Al modificar una existente:
+
+```text
+[ Enviar propuesta al controlador ]
+```
+
+---
+
+# 40. Gestión de turnos
+
+El administrador tendrá una pantalla tipo calendario.
+
+Podrá seleccionar:
+
+- Día.
+- Persona.
+- Hora.
+- Repetición.
+
+Ejemplo:
+
+```text
+Nuevo turno
+
+Tipo
+
+[ Ducha ▼ ]
+
+Usuario
+
+[ Usuario A ▼ ]
+
+Inicio
+
+[ 20:00 ]
+
+Fin
+
+[ 20:20 ]
+
+Repetición
+
+[ Semanal ▼ ]
+
+          [ Guardar ]
+```
+
+---
+
+# 41. Perfil
+
+```text
+Perfil
+
+Usuario A
+
+Administrador
+
+────────────────────
+
+Cuenta
+
+Apariencia
+Claro / Oscuro / Sistema
+
+Administración
+
+Cerrar sesión
+```
+
+La opción Administración solo aparecerá para el administrador.
+
+---
+
+# 42. Notificaciones
+
+La aplicación tendrá inicialmente pocas notificaciones.
+
+Principalmente:
+
+### Informe semanal
+
+**Resumen semanal disponible**
+
+### Excepción
+
+Para las personas que deban aprobarla:
+
+**Nueva solicitud de excepción**
+
+### Resultado de excepción
+
+**Tu solicitud ha sido aprobada**
+
+o
+
+**Tu solicitud ha sido rechazada**
+
+---
+
+# 43. Lo que NO generará notificación
+
+No se notificará inmediatamente:
+
+- Nueva falta.
+- Nueva queja.
+- Nuevo comentario en una falta.
+
+Esto respeta el funcionamiento acordado y evita conflictos instantáneos innecesarios.
+
+---
+
+# 44. Jerarquía visual
+
+La aplicación utilizará tres niveles visuales.
+
+## Nivel 1
+
+Información inmediata.
+
+Ejemplo:
+
+**Hoy tienes que tirar la basura.**
+
+## Nivel 2
+
+Información resumida.
+
+Ejemplo:
+
+**Debes 14,50 €.**
+
+## Nivel 3
+
+Históricos y detalles.
+
+Ejemplo:
+
+Listado completo de gastos.
+
+Esto permitirá que Inicio sea sencillo aunque la aplicación tenga muchas funciones.
+
+---
+
+# 45. Diseño de tarjetas
+
+Los elementos principales se mostrarán mediante tarjetas.
+
+Ejemplo:
+
+```text
+┌───────────────────────────────┐
+│ 🧹 LIMPIEZA                   │
+│                               │
+│ Limpiar baño                  │
+│ Hoy                           │
+│                               │
+│ [ Marcar realizada ]          │
+└───────────────────────────────┘
+```
+
+Las tarjetas deberán tener:
+
+- Bordes redondeados.
+- Espaciado amplio.
+- Iconografía sencilla.
+- Poco texto.
+- Acción principal claramente visible.
+
+---
+
+# 46. Botón flotante
+
+En determinadas secciones se utilizará un botón:
+
+**+**
+
+Por ejemplo:
+
+Faltas → nueva falta.
+
+Quejas → nueva queja.
+
+Inventario → nuevo producto.
+
+Listas → nuevo elemento.
+
+Gastos → nuevo gasto.
+
+---
+
+# 47. Diseño para modo oscuro
+
+La estructura será idéntica.
+
+Solo cambiarán:
+
+- Fondo.
+- Superficies.
+- Texto.
+- Bordes.
+- Contraste.
+
+La aplicación respetará inicialmente la configuración del dispositivo.
+
+El usuario podrá cambiarla manualmente desde Perfil.
+
+---
+
+# 48. Flujo principal del usuario
+
+Al abrir la aplicación:
+
+```text
+LOGIN GOOGLE
+      ↓
+    INICIO
+      ↓
+¿Qué necesito hacer ahora?
+      ↓
+ ┌────┼─────┬─────┐
+ ↓    ↓     ↓     ↓
+Casa Falta Compra Dinero
+```
+
+La aplicación debe responder principalmente a una pregunta:
+
+**“¿Qué tengo que hacer o saber ahora?”**
+
+---
+
+# 49. Principio de diseño del módulo de convivencia
+
+Registrar una falta debe ser fácil.
+
+Pero consultar las normas debe ser todavía más fácil.
+
+La intención no es incentivar registrar incumplimientos, sino que las reglas sean claras y puedan comprobarse rápidamente.
+
+---
+
+# 50. Arquitectura completa
+
+```text
+APP
+│
+├── Inicio
+│
+├── Convivencia
+│   ├── Normas
+│   │   └── Detalle norma
+│   │
+│   ├── Faltas
+│   │   ├── Nueva falta
+│   │   ├── Detalle
+│   │   └── Estadísticas
+│   │
+│   ├── Quejas
+│   │   ├── Nueva queja
+│   │   └── Detalle
+│   │
+│   ├── Excepciones
+│   │   ├── Nueva solicitud
+│   │   └── Detalle
+│   │
+│   └── Resumen semanal
+│
+├── Casa
+│   ├── Calendario
+│   ├── Duchas
+│   ├── Limpieza
+│   ├── Basura
+│   └── Tareas
+│
+├── Compra
+│   ├── Mi comida
+│   ├── Compartido
+│   ├── Hogar
+│   └── Listas
+│
+├── Dinero
+│   ├── Balance
+│   ├── Gastos
+│   ├── Deudas
+│   └── Historial
+│
+├── Perfil
+│
+└── Administración
+    ├── Usuarios
+    ├── Normas
+    ├── Turnos
+    ├── Tareas
+    ├── Configuración
+    └── Auditoría
+```
+
+---
+
+# 51. Estructura específica del controlador
+
+```text
+CONTROLADOR
+│
+├── Resumen
+│
+├── Faltas
+│   └── Revisar falta
+│
+├── Quejas
+│   └── Detalle
+│
+├── Excepciones
+│   └── Aprobar / Rechazar
+│
+└── Informes
+```
+
+---
+
+# 52. Prioridad de desarrollo
+
+La interfaz debería desarrollarse en este orden:
+
+### Fase 1 — Base
+
+Login  
+Usuarios  
+Navegación  
+Inicio  
+
+### Fase 2 — Convivencia
+
+Normas  
+Faltas  
+Quejas  
+Controlador  
+Resumen semanal  
+
+### Fase 3 — Casa
+
+Tareas  
+Duchas  
+Limpieza  
+Basura  
+Calendario  
+
+### Fase 4 — Dinero
+
+Gastos  
+Deudas  
+Pagos  
+Simplificación  
+
+### Fase 5 — Compra
+
+Inventarios  
+Listas  
+Productos  
+
+### Fase 6 — Administración
+
+Normas  
+Usuarios  
+Turnos  
+Auditoría  
+Configuración  
+
+---
+
+# 53. MVP
+
+Para tener una primera versión utilizable lo antes posible, el MVP podrá contener:
+
+- Inicio de sesión con Google.
+- Los tres usuarios.
+- Roles.
+- Normas.
+- Faltas.
+- Fotografías.
+- Comentarios.
+- Quejas.
+- Controlador.
+- Informe semanal.
+- Notificaciones.
+- Excepciones de visitas.
+
+Después se añadirán:
+
+- Tareas.
+- Duchas.
+- Limpieza.
+- Compra.
+- Inventarios.
+- Gastos.
+- Deudas.
+
+La arquitectura estará preparada desde el principio para todos los módulos.

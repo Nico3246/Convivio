@@ -1,0 +1,76 @@
+{
+  "name": "convivio",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Convivio: gestión privada de convivencia para Android",
+  "main": "expo-router/entry",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "typecheck": "tsc --noEmit && tsc -p supabase/functions/tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "verify": "npm run typecheck && npm run lint && npm test",
+    "build:check": "expo export --platform android",
+    "types:db": "node scripts/generate-database-types.mjs && prettier --write src/services/database.types.ts"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "@react-native-community/datetimepicker": "9.1.0",
+    "@supabase/supabase-js": "2.117.1",
+    "@tanstack/react-query": "5.103.2",
+    "decode-uri-component": "file:./vendor/decode-uri-component",
+    "expo": "57.0.25",
+    "expo-auth-session": "~57.0.13",
+    "expo-constants": "~57.0.19",
+    "expo-crypto": "~57.0.3",
+    "expo-dev-client": "~57.0.19",
+    "expo-device": "~57.0.2",
+    "expo-file-system": "~57.0.7",
+    "expo-font": "~57.0.4",
+    "expo-image-manipulator": "~57.0.20",
+    "expo-image-picker": "~57.0.20",
+    "expo-linking": "~57.0.11",
+    "expo-notifications": "~57.0.21",
+    "expo-router": "~57.0.23",
+    "expo-secure-store": "~57.0.4",
+    "expo-standard-web-crypto": "57.0.3",
+    "expo-status-bar": "~57.0.1",
+    "expo-system-ui": "~57.0.4",
+    "expo-web-browser": "~57.0.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-reanimated": "4.5.1",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "~4.26.0",
+    "react-native-url-polyfill": "^4.0.0",
+    "react-native-worklets": "0.10.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "@types/node": "24.13.6",
+    "@types/react": "19.2.18",
+    "@types/react-test-renderer": "19.1.0",
+    "eslint": "9.39.5",
+    "eslint-config-expo": "57.0.2",
+    "prettier": "3.9.9",
+    "react-test-renderer": "19.2.3",
+    "typescript": "6.0.3",
+    "vitest": "5.0.1"
+  },
+  "overrides": {
+    "decode-uri-component": "$decode-uri-component",
+    "xcode": {
+      "uuid": "11.1.1"
+    }
+  }
+}

@@ -1,0 +1,1793 @@
+# Convivio — Informe definitivo de tecnologías y arquitectura V1.0
+
+## 1. Objetivo técnico
+
+Convivio se desarrollará desde el principio como una aplicación:
+
+- sólida;
+- segura;
+- mantenible;
+- modular;
+- correctamente tipada;
+- preparada para crecer;
+- Android en su primera versión;
+- con coste mensual objetivo de 0 €;
+- preparada para una posible publicación futura.
+
+Aunque actualmente será utilizada únicamente por tres personas, **no se desarrollará como un prototipo desechable**.
+
+La V1 utilizará prácticas y una estructura propias de una aplicación de producción.
+
+---
+
+# 2. Decisión principal sobre lenguajes
+
+Convivio utilizará principalmente dos tecnologías de programación:
+
+## TypeScript
+
+Será el lenguaje principal de programación.
+
+Se utilizará para:
+
+- aplicación Android;
+- interfaz;
+- lógica del cliente;
+- servicios;
+- modelos;
+- validaciones;
+- conexión con Supabase;
+- Edge Functions;
+- notificaciones;
+- automatizaciones de servidor.
+
+## SQL / PostgreSQL
+
+Se utilizará para:
+
+- estructura de datos;
+- relaciones;
+- restricciones;
+- consultas;
+- seguridad RLS;
+- operaciones transaccionales;
+- determinadas funciones de base de datos.
+
+También podrá utilizarse:
+
+## PL/pgSQL
+
+Exclusivamente cuando resulte útil crear funciones internas de PostgreSQL.
+
+---
+
+# 3. Lenguajes que NO utilizaremos inicialmente
+
+Convivio V1 no necesitará:
+
+- Java.
+- Kotlin.
+- Python.
+- C++.
+- Spring Boot.
+- FastAPI.
+- Express.
+
+Esto no significa que sean malas tecnologías.
+
+Simplemente introducirlas en Convivio supondría añadir otra capa de servidor o más lenguajes sin aportar una ventaja suficiente.
+
+La arquitectura queda deliberadamente reducida a:
+
+```text
+TypeScript
+    +
+SQL / PostgreSQL
+```
+
+---
+
+# 4. Filosofía respecto a TypeScript
+
+Aunque inicialmente no exista experiencia previa con TypeScript, no se utilizará como “JavaScript con algunos tipos”.
+
+Se utilizará de forma estricta.
+
+## Regla
+
+El proyecto tendrá:
+
+```text
+strict = true
+```
+
+desde el primer commit.
+
+Se evitará:
+
+```text
+any
+```
+
+salvo situaciones muy excepcionales y justificadas.
+
+---
+
+# 5. Ventaja para alguien procedente de Java/C++
+
+Conceptos como:
+
+- tipos;
+- interfaces;
+- enumeraciones;
+- clases;
+- genéricos;
+- encapsulación;
+- separación por módulos;
+- tipado de parámetros;
+- tipado de retornos;
+
+resultarán familiares.
+
+Ejemplo:
+
+```text
+type UserRole =
+  | "ADMIN"
+  | "RESIDENT"
+  | "CONTROLLER";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+}
+```
+
+El aprendizaje principal estará relacionado con:
+
+- JavaScript moderno;
+- programación asíncrona;
+- React;
+- React Native;
+- ecosistema Expo.
+
+---
+
+# 6. Stack tecnológico definitivo
+
+| Área | Tecnología |
+|---|---|
+| Lenguaje principal | TypeScript |
+| App móvil | React Native |
+| Plataforma | Expo |
+| Versión inicial | Expo SDK 57 |
+| Navegación | Expo Router |
+| Base de datos | PostgreSQL |
+| Backend gestionado | Supabase |
+| Autenticación | Supabase Auth |
+| Login | Google |
+| Seguridad de datos | Supabase RLS |
+| Archivos | Supabase Storage |
+| Backend serverless | Supabase Edge Functions |
+| Automatizaciones | Supabase Cron |
+| Estado remoto | TanStack Query |
+| Estado local | Zustand |
+| Formularios | React Hook Form |
+| Validación | Zod |
+| Fechas | date-fns |
+| Iconos | Lucide React Native |
+| Notificaciones | expo-notifications |
+| Imágenes | expo-image-picker |
+| Compresión | expo-image-manipulator |
+| Tests lógica | Vitest/Jest según módulo |
+| Tests UI | React Native Testing Library |
+| Lint | ESLint |
+| Formato | Prettier |
+| Repositorio | Git + GitHub |
+| CI | GitHub Actions |
+| Builds | EAS Build |
+| Plataforma V1 | Android |
+
+---
+
+# 7. Frontend móvil
+
+## React Native
+
+Será el framework principal de Convivio.
+
+Permitirá desarrollar la aplicación Android mediante React y TypeScript.
+
+### Ventajas
+
+- arquitectura moderna;
+- componentes reutilizables;
+- gran ecosistema;
+- desarrollo rápido;
+- futura posibilidad de portar a iOS;
+- buena integración con Expo.
+
+---
+
+# 8. Expo
+
+Se utilizará Expo sobre React Native.
+
+Versión inicial:
+
+**Expo SDK 57 estable.**
+
+No utilizaremos SDK 58 mientras permanezca en beta.
+
+La versión podrá actualizarse posteriormente siguiendo un proceso controlado de actualización y pruebas.
+
+---
+
+# 9. Expo Router
+
+La navegación utilizará:
+
+**Expo Router**
+
+La estructura de pantallas podrá representarse directamente mediante carpetas y archivos.
+
+Ejemplo:
+
+```text
+app/
+│
+├── (auth)/
+│
+├── (resident)/
+│
+├── (controller)/
+│
+└── ...
+```
+
+Esto facilitará mantener claramente separadas las interfaces de cada rol.
+
+---
+
+# 10. Backend
+
+No existirá inicialmente un servidor tradicional independiente.
+
+No montaremos:
+
+```text
+React Native
+      ↓
+FastAPI / Spring
+      ↓
+PostgreSQL
+```
+
+En su lugar:
+
+```text
+React Native
+      ↓
+Supabase
+      ↓
+PostgreSQL
+```
+
+Cuando sea necesaria lógica de servidor:
+
+```text
+React Native
+      ↓
+Supabase Edge Function
+      ↓
+PostgreSQL
+```
+
+---
+
+# 11. Supabase
+
+Supabase proporcionará:
+
+- PostgreSQL;
+- autenticación;
+- almacenamiento;
+- Row Level Security;
+- funciones serverless;
+- tareas programadas;
+- API de datos;
+- gestión de sesiones.
+
+Esto elimina la necesidad de mantener varios servicios independientes.
+
+---
+
+# 12. Base de datos
+
+La base de datos será:
+
+# PostgreSQL
+
+Esta elección es especialmente adecuada para Convivio por la gran cantidad de relaciones existentes.
+
+Ejemplos:
+
+```text
+Usuario
+   ↓
+Falta
+   ↓
+Norma
+   ↓
+Versión de norma
+```
+
+o:
+
+```text
+Compra
+   ↓
+Participantes
+   ↓
+Deudas
+   ↓
+Pagos
+```
+
+---
+
+# 13. PostgreSQL como parte de la robustez
+
+La integridad no dependerá únicamente de TypeScript.
+
+La base de datos impondrá reglas mediante:
+
+- `PRIMARY KEY`;
+- `FOREIGN KEY`;
+- `NOT NULL`;
+- `UNIQUE`;
+- `CHECK`;
+- tipos correctos;
+- transacciones;
+- índices.
+
+Ejemplo conceptual:
+
+```text
+importe_deuda >= 0
+```
+
+no será simplemente una comprobación visual.
+
+La propia base de datos impedirá valores inválidos.
+
+---
+
+# 14. División de responsabilidades
+
+La lógica no se colocará arbitrariamente.
+
+## Aplicación TypeScript
+
+Responsable de:
+
+- interfaz;
+- interacción;
+- navegación;
+- formularios;
+- validación inmediata;
+- presentación de datos.
+
+## PostgreSQL
+
+Responsable de:
+
+- integridad;
+- relaciones;
+- seguridad;
+- restricciones;
+- consultas;
+- operaciones transaccionales.
+
+## Edge Functions TypeScript
+
+Responsables de:
+
+- automatizaciones;
+- coordinación de procesos;
+- notificaciones;
+- operaciones privilegiadas;
+- integraciones externas.
+
+---
+
+# 15. Regla importante
+
+Una norma crítica del negocio nunca dependerá exclusivamente de la interfaz.
+
+Por ejemplo:
+
+El controlador puede eliminar/inactivar una falta.
+
+No bastará con ocultar el botón al residente.
+
+El backend comprobará que:
+
+```text
+role == CONTROLLER
+```
+
+antes de permitir la operación.
+
+---
+
+# 16. Row Level Security
+
+Supabase RLS será una parte fundamental del sistema.
+
+Habrá políticas para:
+
+- ADMIN;
+- RESIDENT;
+- CONTROLLER.
+
+Ejemplo conceptual:
+
+```text
+RESIDENT
+    ↓
+puede insertar falta
+
+CONTROLLER
+    ↓
+puede confirmar/inactivar falta
+
+RESIDENT
+    ↓
+NO puede inactivar falta
+```
+
+Estas restricciones existirán en PostgreSQL.
+
+---
+
+# 17. Autenticación
+
+Se utilizará:
+
+**Supabase Auth + Google Sign-In**
+
+No habrá registro libre.
+
+Flujo:
+
+```text
+Google
+   ↓
+Supabase Auth
+   ↓
+Obtener usuario
+   ↓
+Comprobar autorización
+   ↓
+Obtener rol
+   ↓
+Cargar interfaz correspondiente
+```
+
+---
+
+# 18. Usuarios autorizados
+
+La aplicación conocerá previamente las cuentas que pueden entrar.
+
+Un login de Google válido no será suficiente.
+
+También deberá existir autorización en Convivio.
+
+Por tanto:
+
+```text
+Cuenta Google válida
+        +
+Usuario autorizado
+        =
+Acceso
+```
+
+---
+
+# 19. Roles
+
+Existirán:
+
+```text
+ADMIN
+RESIDENT
+CONTROLLER
+```
+
+El tipo deberá estar fuertemente definido.
+
+No utilizaremos cadenas arbitrarias por diferentes partes del código.
+
+---
+
+# 20. Almacenamiento de archivos
+
+Las fotografías utilizarán:
+
+**Supabase Storage**
+
+Buckets previstos:
+
+```text
+fault-evidence
+complaint-evidence
+receipts
+avatars
+```
+
+Cada uno tendrá políticas específicas.
+
+---
+
+# 21. Fotografías
+
+Antes de subir una fotografía:
+
+```text
+Imagen original
+       ↓
+expo-image-manipulator
+       ↓
+Redimensionar
+       ↓
+Comprimir
+       ↓
+Supabase Storage
+       ↓
+Guardar referencia en PostgreSQL
+```
+
+La base de datos no almacenará directamente los bytes de las imágenes.
+
+---
+
+# 22. Edge Functions
+
+Las funciones de servidor se desarrollarán en:
+
+**TypeScript**
+
+sobre el runtime de Supabase compatible con Deno.
+
+Casos previstos:
+
+```text
+generate-weekly-report
+send-push-notification
+process-visit-exception
+process-rule-change
+administrative-operation
+```
+
+No deberán convertirse en un backend monolítico.
+
+Cada función tendrá una responsabilidad bien definida.
+
+---
+
+# 23. Lógica que NO debe ir innecesariamente en Edge Functions
+
+No utilizaremos Edge Functions para cada operación CRUD.
+
+Por ejemplo, consultar una lista de productos podrá realizarse directamente mediante Supabase y RLS.
+
+Usaremos Edge Functions cuando aporten valor real:
+
+- acción privilegiada;
+- proceso complejo;
+- automatización;
+- varias operaciones coordinadas;
+- servicio externo;
+- lógica que no debe ejecutarse en el dispositivo.
+
+---
+
+# 24. Funciones PostgreSQL
+
+Determinadas operaciones podrán implementarse directamente en PostgreSQL cuando necesiten:
+
+- transacciones;
+- varias tablas;
+- cálculos próximos a los datos;
+- consistencia fuerte.
+
+Ejemplos potenciales:
+
+- cálculo de balances;
+- simplificación de deudas;
+- estadísticas;
+- operaciones transaccionales.
+
+---
+
+# 25. Automatizaciones
+
+Se utilizará:
+
+**Supabase Cron**
+
+Caso principal:
+
+```text
+SÁBADO 12:00
+      ↓
+Generar informe semanal
+      ↓
+Guardar informe
+      ↓
+Enviar notificación
+```
+
+La lógica utilizará explícitamente:
+
+```text
+Europe/Madrid
+```
+
+como zona horaria funcional de Convivio.
+
+---
+
+# 26. Informe semanal
+
+Flujo técnico:
+
+```text
+Supabase Cron
+     ↓
+generate-weekly-report
+     ↓
+Consultar:
+  - faltas
+  - quejas
+  - tareas
+  - gastos
+  - deudas
+     ↓
+Crear snapshot del informe
+     ↓
+Guardar weekly_report
+     ↓
+Enviar push
+```
+
+---
+
+# 27. Notificaciones
+
+Tecnologías:
+
+- `expo-notifications`;
+- Expo Push Service.
+
+Cada dispositivo tendrá asociado su token de notificaciones.
+
+Se enviarán notificaciones para:
+
+- resumen semanal;
+- solicitud de excepción;
+- aprobación de excepción;
+- rechazo de excepción.
+
+No se notificarán inmediatamente:
+
+- faltas;
+- quejas;
+- comentarios de faltas.
+
+---
+
+# 28. Gestión de datos remotos
+
+Utilizaremos:
+
+# TanStack Query
+
+No cargaremos datos manualmente en cada pantalla con estructuras improvisadas.
+
+TanStack Query controlará:
+
+- peticiones;
+- caché;
+- estados de carga;
+- errores;
+- refresco;
+- invalidación;
+- sincronización.
+
+Ejemplo:
+
+```text
+registrarFalta()
+      ↓
+éxito
+      ↓
+invalidar query "faults"
+      ↓
+lista actualizada
+```
+
+---
+
+# 29. Estado local
+
+Utilizaremos:
+
+# Zustand
+
+Pero únicamente para información local que realmente lo necesite.
+
+Ejemplos:
+
+- preferencias de UI;
+- filtros;
+- información temporal;
+- estado global pequeño.
+
+No duplicaremos dentro de Zustand todos los datos que ya administra TanStack Query.
+
+---
+
+# 30. Formularios
+
+Tecnologías:
+
+**React Hook Form + Zod**
+
+Se utilizarán para:
+
+- faltas;
+- quejas;
+- gastos;
+- normas;
+- tareas;
+- productos;
+- excepciones;
+- deudas.
+
+---
+
+# 31. Validación con Zod
+
+Los formularios no confiarán simplemente en que una propiedad exista.
+
+Ejemplo conceptual:
+
+```text
+Falta
+
+responsable     obligatorio
+norma           obligatoria
+descripcion     obligatoria
+fecha           válida
+foto            opcional
+```
+
+Zod aportará validación y tipado.
+
+---
+
+# 32. Validación en múltiples niveles
+
+Convivio utilizará defensa en profundidad.
+
+```text
+INTERFAZ
+   ↓
+React Hook Form + Zod
+   ↓
+TypeScript
+   ↓
+Servidor / RLS
+   ↓
+PostgreSQL constraints
+```
+
+Por tanto, incluso si se evita la validación del móvil, la base de datos seguirá protegiendo los datos.
+
+---
+
+# 33. Gestión de fechas
+
+Se utilizará:
+
+**date-fns**
+
+Para:
+
+- fechas;
+- semanas;
+- intervalos;
+- informes;
+- visualización;
+- cálculos de calendario.
+
+Las fechas importantes se almacenarán correctamente y se convertirán para:
+
+**Europe/Madrid**
+
+cuando sea necesario.
+
+---
+
+# 34. Iconografía
+
+Se utilizará:
+
+**Lucide React Native**
+
+Por:
+
+- consistencia;
+- diseño limpio;
+- buena variedad;
+- fácil integración.
+
+---
+
+# 35. Design System
+
+No construiremos cada pantalla desde cero.
+
+Se crearán componentes reutilizables.
+
+Ejemplos:
+
+```text
+AppButton
+AppInput
+AppSelect
+AppCard
+AppModal
+AppHeader
+StatusBadge
+UserAvatar
+LoadingSkeleton
+EmptyState
+ErrorState
+BottomNavigation
+```
+
+---
+
+# 36. Temas
+
+Desde el inicio existirá:
+
+```text
+theme/
+├── colors.ts
+├── spacing.ts
+├── typography.ts
+├── radii.ts
+└── shadows.ts
+```
+
+Esto garantizará coherencia visual.
+
+---
+
+# 37. Modo claro y oscuro
+
+Ambos se implementarán sobre el mismo Design System.
+
+No existirán dos conjuntos independientes de estilos.
+
+---
+
+# 38. Testing
+
+Para que Convivio sea sólida, los tests formarán parte de la arquitectura inicial.
+
+## Tests unitarios
+
+Especialmente para:
+
+- cálculo de deudas;
+- pagos parciales;
+- simplificación;
+- permisos;
+- generación de informes;
+- validaciones;
+- turnos.
+
+## Tests de componentes
+
+Con:
+
+**React Native Testing Library**
+
+Para comprobar comportamiento de la UI.
+
+## Tests de integración
+
+Para operaciones críticas contra Supabase.
+
+---
+
+# 39. Funcionalidades que obligatoriamente tendrán pruebas
+
+Como mínimo:
+
+```text
+AUTORIZACIÓN
+
+ADMIN ≠ RESIDENT ≠ CONTROLLER
+```
+
+```text
+DEUDAS
+
+compra
+→ reparto
+→ deuda
+→ pago parcial
+→ saldo
+```
+
+```text
+EXCEPCIONES
+
+residente aprueba
++
+controlador aprueba
+=
+APROBADA
+```
+
+```text
+FALTA
+
+residente registra
+→ controlador confirma/inactiva
+→ estadísticas correctas
+```
+
+```text
+INFORME SEMANAL
+
+cada registro aparece
+exactamente en el periodo correcto
+```
+
+---
+
+# 40. ESLint
+
+El proyecto utilizará ESLint desde su creación.
+
+Objetivos:
+
+- detectar errores;
+- mantener reglas;
+- impedir determinados patrones;
+- mejorar consistencia.
+
+---
+
+# 41. Prettier
+
+Prettier gestionará automáticamente el formato del código.
+
+No dedicaremos tiempo a discutir:
+
+- espacios;
+- comillas;
+- saltos;
+- sangrías.
+
+---
+
+# 42. TypeScript strict
+
+El compilador tendrá las comprobaciones estrictas activadas.
+
+Errores de tipos impedirán considerar válida una versión.
+
+---
+
+# 43. Git
+
+Todo el desarrollo estará versionado.
+
+Estructura:
+
+```text
+main
+```
+
+contendrá únicamente código estable.
+
+Durante el desarrollo se utilizarán ramas para funcionalidades cuando resulte conveniente.
+
+---
+
+# 44. GitHub
+
+El repositorio estará alojado en GitHub.
+
+Permitirá:
+
+- historial;
+- issues;
+- branches;
+- releases;
+- GitHub Actions.
+
+---
+
+# 45. Integración continua
+
+Utilizaremos:
+
+# GitHub Actions
+
+Ante cambios importantes podrá ejecutarse automáticamente:
+
+```text
+npm install
+     ↓
+TypeScript check
+     ↓
+ESLint
+     ↓
+Tests
+     ↓
+Build validation
+```
+
+Si algo falla:
+
+```text
+✗ versión no válida
+```
+
+Esto ayuda a impedir que errores evidentes lleguen a `main`.
+
+---
+
+# 46. Builds Android
+
+Utilizaremos:
+
+# EAS Build
+
+Generará:
+
+- development builds;
+- APK para pruebas;
+- AAB para una futura publicación.
+
+---
+
+# 47. Development Builds
+
+No dependeremos exclusivamente de Expo Go.
+
+Utilizaremos builds de desarrollo de Convivio para trabajar con capacidades nativas como:
+
+- notificaciones;
+- autenticación;
+- configuración Android.
+
+---
+
+# 48. Gestión de entornos
+
+Desde el principio diferenciaremos al menos:
+
+```text
+development
+production
+```
+
+Idealmente:
+
+```text
+development
+staging
+production
+```
+
+cuando el proyecto avance.
+
+---
+
+# 49. Variables de entorno
+
+Ejemplos:
+
+```text
+EXPO_PUBLIC_SUPABASE_URL
+EXPO_PUBLIC_SUPABASE_ANON_KEY
+EXPO_PUBLIC_ENVIRONMENT
+```
+
+Los secretos privados nunca deberán incluirse dentro de la aplicación Android.
+
+---
+
+# 50. Claves privadas
+
+Una regla absoluta será:
+
+**Una APK nunca contiene una service role key de Supabase.**
+
+Las claves privilegiadas solo podrán existir en:
+
+- Edge Functions;
+- entornos seguros;
+- infraestructura de backend.
+
+---
+
+# 51. Arquitectura de carpetas
+
+Estructura propuesta:
+
+```text
+convivio/
+│
+├── app/
+│   │
+│   ├── _layout.tsx
+│   │
+│   ├── (auth)/
+│   │
+│   ├── (resident)/
+│   │
+│   └── (controller)/
+│
+├── src/
+│   │
+│   ├── components/
+│   │
+│   ├── features/
+│   │   ├── auth/
+│   │   ├── users/
+│   │   ├── rules/
+│   │   ├── faults/
+│   │   ├── complaints/
+│   │   ├── exceptions/
+│   │   ├── tasks/
+│   │   ├── schedules/
+│   │   ├── inventory/
+│   │   ├── shopping/
+│   │   ├── expenses/
+│   │   ├── debts/
+│   │   ├── reports/
+│   │   └── audit/
+│   │
+│   ├── services/
+│   ├── hooks/
+│   ├── lib/
+│   ├── store/
+│   ├── theme/
+│   ├── types/
+│   └── utils/
+│
+├── supabase/
+│   │
+│   ├── migrations/
+│   ├── functions/
+│   ├── seed/
+│   └── config.toml
+│
+├── tests/
+│
+├── .github/
+│   └── workflows/
+│
+└── package.json
+```
+
+---
+
+# 52. Arquitectura por funcionalidades
+
+Cada feature deberá intentar mantener juntos sus elementos relacionados.
+
+Ejemplo:
+
+```text
+features/
+└── faults/
+    ├── api/
+    ├── components/
+    ├── hooks/
+    ├── schemas/
+    ├── services/
+    ├── types/
+    └── utils/
+```
+
+Así evitaremos terminar con carpetas enormes y desorganizadas.
+
+---
+
+# 53. Capa de acceso a datos
+
+Las pantallas no realizarán consultas arbitrarias a Supabase directamente.
+
+Evitar:
+
+```text
+Pantalla
+  ↓
+consulta SQL/Supabase improvisada
+```
+
+Preferiremos:
+
+```text
+Pantalla
+  ↓
+Hook
+  ↓
+Service / Repository
+  ↓
+Supabase
+```
+
+Esto facilita:
+
+- testing;
+- mantenimiento;
+- cambios futuros;
+- reutilización.
+
+---
+
+# 54. Modelo general
+
+```text
+┌─────────────────────────────────────┐
+│            CONVIVIO APP             │
+│                                     │
+│ React Native + Expo                 │
+│ TypeScript strict                   │
+│                                     │
+│ ┌─────────────────────────────────┐ │
+│ │ Presentación                    │ │
+│ └───────────────┬─────────────────┘ │
+│                 ↓                   │
+│ ┌─────────────────────────────────┐ │
+│ │ Hooks / lógica de aplicación    │ │
+│ └───────────────┬─────────────────┘ │
+│                 ↓                   │
+│ ┌─────────────────────────────────┐ │
+│ │ Services / Repositories         │ │
+│ └───────────────┬─────────────────┘ │
+└─────────────────┼───────────────────┘
+                  ↓
+              Supabase
+                  │
+        ┌─────────┼─────────┐
+        ↓         ↓         ↓
+      Auth      Edge      Storage
+                Functions
+                  │
+                  ↓
+             PostgreSQL
+                  │
+        ┌─────────┼─────────┐
+        ↓         ↓         ↓
+       RLS    Functions  Constraints
+```
+
+---
+
+# 55. Base de datos inicial
+
+Entidades previstas:
+
+```text
+households
+users
+roles
+
+rules
+rule_versions
+
+faults
+fault_comments
+fault_evidence
+
+complaints
+complaint_evidence
+
+visit_exceptions
+visit_exception_decisions
+
+tasks
+task_assignments
+schedules
+
+inventory_items
+
+shopping_lists
+shopping_list_items
+
+expenses
+expense_participants
+
+debts
+debt_payments
+
+weekly_reports
+
+push_tokens
+notifications
+
+audit_logs
+```
+
+---
+
+# 56. Preparación para crecimiento
+
+Aunque actualmente exista un solo piso, añadiremos desde el diseño:
+
+```text
+household_id
+```
+
+a las entidades que corresponda.
+
+Eso permitirá que en el futuro Convivio pueda admitir:
+
+```text
+Piso 1
+Piso 2
+Piso 3
+...
+```
+
+sin tener que rediseñar completamente la base de datos.
+
+En la V1 esta funcionalidad no se expondrá al usuario.
+
+---
+
+# 57. Tratamiento de eliminaciones
+
+Para información sensible no utilizaremos borrado físico siempre que sea importante conservar trazabilidad.
+
+Ejemplo:
+
+Una falta invalidada:
+
+```text
+status = DISMISSED
+```
+
+y se almacenará:
+
+```text
+dismissed_by
+dismissed_at
+dismiss_reason
+```
+
+No desaparecerá silenciosamente de la base de datos.
+
+---
+
+# 58. Auditoría
+
+Se registrarán acciones como:
+
+- creación de norma;
+- modificación;
+- aprobación;
+- eliminación lógica de falta;
+- modificaciones administrativas;
+- decisiones sobre excepciones.
+
+Campos aproximados:
+
+```text
+actor
+action
+entity
+entity_id
+timestamp
+metadata
+```
+
+---
+
+# 59. Transacciones
+
+Las operaciones económicas críticas deberán ser atómicas.
+
+Ejemplo:
+
+```text
+Registrar compra
+      ↓
+Crear gasto
+      ↓
+Crear participantes
+      ↓
+Generar deuda
+```
+
+O se realizan todas correctamente:
+
+```text
+COMMIT
+```
+
+o ninguna:
+
+```text
+ROLLBACK
+```
+
+Nunca debemos terminar con una compra guardada pero una deuda sin crear por un error intermedio.
+
+---
+
+# 60. Robustez de las deudas
+
+El saldo mostrado será un dato derivado.
+
+No confiaremos únicamente en guardar:
+
+```text
+saldo = 20
+```
+
+sin conocer su origen.
+
+Conservaremos los movimientos:
+
+- gastos;
+- deudas;
+- pagos.
+
+El balance podrá reconstruirse.
+
+---
+
+# 61. Observabilidad y errores
+
+La aplicación tendrá un sistema centralizado para:
+
+- errores;
+- logs de desarrollo;
+- errores de red;
+- errores inesperados.
+
+No utilizaremos:
+
+```text
+try/catch
+```
+
+aislados por toda la aplicación sin estrategia común.
+
+---
+
+# 62. Manejo de errores de usuario
+
+Los mensajes serán comprensibles.
+
+Evitar:
+
+```text
+PostgrestError PGRST116
+```
+
+Mostrar:
+
+```text
+No se ha podido registrar la falta.
+Comprueba tu conexión e inténtalo de nuevo.
+```
+
+Los detalles técnicos quedarán para logs.
+
+---
+
+# 63. Sin conexión
+
+Convivio requiere conexión a Internet.
+
+Sin embargo:
+
+- la aplicación no deberá cerrarse;
+- mostrará el estado de conexión;
+- evitará enviar operaciones imposibles;
+- conservará caché visual cuando sea razonable.
+
+---
+
+# 64. Actualizaciones
+
+Las versiones importantes de:
+
+- Expo;
+- React Native;
+- Supabase;
+- librerías;
+
+no se actualizarán automáticamente sin revisión.
+
+Proceso:
+
+```text
+actualización
+    ↓
+branch
+    ↓
+typecheck
+    ↓
+lint
+    ↓
+tests
+    ↓
+pruebas Android
+    ↓
+merge
+```
+
+---
+
+# 65. Dependencias
+
+Evitaremos instalar librerías para problemas pequeños que podamos resolver fácilmente.
+
+Cada dependencia aumenta:
+
+- mantenimiento;
+- vulnerabilidades potenciales;
+- riesgo de incompatibilidad.
+
+Usaremos dependencias consolidadas y necesarias.
+
+---
+
+# 66. Rendimiento
+
+Las listas grandes utilizarán componentes optimizados.
+
+Las imágenes estarán comprimidas.
+
+Las consultas devolverán únicamente los campos necesarios.
+
+PostgreSQL tendrá índices para consultas frecuentes.
+
+---
+
+# 67. Seguridad
+
+La seguridad se distribuirá en varias capas:
+
+```text
+Google Auth
+     ↓
+Supabase Auth
+     ↓
+Usuario autorizado
+     ↓
+Rol
+     ↓
+RLS
+     ↓
+Constraints PostgreSQL
+     ↓
+Auditoría
+```
+
+---
+
+# 68. Coste
+
+Objetivo:
+
+# 0 €/mes
+
+La arquitectura está diseñada para mantenerse dentro de los planes gratuitos mientras el pequeño volumen de uso de Convivio permanezca dentro de sus límites.
+
+No utilizaremos inicialmente:
+
+- VPS;
+- servidor dedicado;
+- hosting FastAPI;
+- servidor Java;
+- base de datos propia;
+- servicios de pago innecesarios.
+
+---
+
+# 69. Publicación futura
+
+Durante el desarrollo:
+
+```text
+APK / development builds
+```
+
+Si posteriormente se publica:
+
+```text
+AAB
+ ↓
+Google Play
+```
+
+No tendremos que reescribir la aplicación para realizar esa transición.
+
+---
+
+# 70. Posible evolución futura
+
+La arquitectura permitirá incorporar posteriormente:
+
+- iOS;
+- versión web;
+- múltiples pisos;
+- nuevos roles;
+- analíticas;
+- IA;
+- exportación de informes;
+- pagos externos;
+- sincronización avanzada.
+
+Sin que ninguna de estas funcionalidades sea necesaria para V1.
+
+---
+
+# 71. Stack final resumido
+
+```text
+CONVIVIO
+│
+├── LENGUAJES
+│   ├── TypeScript
+│   ├── SQL
+│   └── PL/pgSQL cuando proceda
+│
+├── APP
+│   ├── React Native
+│   ├── Expo SDK 57
+│   └── Expo Router
+│
+├── ESTADO
+│   ├── TanStack Query
+│   └── Zustand
+│
+├── FORMULARIOS
+│   ├── React Hook Form
+│   └── Zod
+│
+├── BACKEND
+│   └── Supabase
+│       ├── PostgreSQL
+│       ├── Auth
+│       ├── Storage
+│       ├── RLS
+│       ├── Edge Functions
+│       └── Cron
+│
+├── MULTIMEDIA
+│   ├── expo-image-picker
+│   └── expo-image-manipulator
+│
+├── NOTIFICACIONES
+│   └── expo-notifications
+│
+├── UI
+│   └── Lucide React Native
+│
+├── CALIDAD
+│   ├── TypeScript strict
+│   ├── ESLint
+│   ├── Prettier
+│   ├── Tests
+│   └── GitHub Actions
+│
+├── VERSIONADO
+│   ├── Git
+│   └── GitHub
+│
+└── BUILD
+    └── EAS Build
+```
+
+---
+
+# 72. Decisión arquitectónica definitiva
+
+## Lenguaje principal
+
+**TypeScript**
+
+## Lenguaje de datos
+
+**SQL / PostgreSQL**
+
+## Frontend
+
+**React Native + Expo**
+
+## Backend
+
+**Supabase**
+
+## Backend personalizado
+
+**Supabase Edge Functions en TypeScript**
+
+## Seguridad
+
+**Supabase Auth + RLS + restricciones PostgreSQL**
+
+## Base de datos
+
+**PostgreSQL**
+
+## Archivos
+
+**Supabase Storage**
+
+## Automatizaciones
+
+**Supabase Cron**
+
+## Notificaciones
+
+**Expo Notifications**
+
+## Calidad
+
+**TypeScript strict + ESLint + tests + CI**
+
+## Plataforma inicial
+
+**Android**
+
+## Coste mensual objetivo
+
+**0 €**
+
+---
+
+# 73. Principio técnico fundamental de Convivio
+
+La aplicación no dependerá de que el frontend “se comporte correctamente”.
+
+Las reglas importantes estarán protegidas también en backend y base de datos.
+
+La arquitectura seguirá este principio:
+
+**La interfaz facilita las acciones.**
+
+**TypeScript garantiza coherencia.**
+
+**El backend autoriza.**
+
+**PostgreSQL protege los datos.**
+
+**Los tests verifican el comportamiento.**
+
+**Git conserva la evolución.**
+
+Ese será el fundamento técnico de Convivio V1.0.

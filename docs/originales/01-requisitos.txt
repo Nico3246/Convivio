@@ -1,0 +1,1023 @@
+# Aplicación de gestión de convivencia — Requisitos V1.0
+
+## 1. Objetivo
+
+La aplicación permitirá gestionar la convivencia de un piso ocupado permanentemente por dos residentes.
+
+Existirán tres cuentas:
+
+- Residente administrador.
+- Residente estándar.
+- Controlador externo.
+
+La aplicación tendrá cinco áreas principales:
+
+1. Normas de convivencia.
+2. Faltas y quejas.
+3. Organización doméstica.
+4. Compra, comida e inventario.
+5. Gastos y deudas.
+
+El sistema mantendrá un historial permanente de la convivencia y generará automáticamente un resumen semanal.
+
+---
+
+# 2. Roles
+
+| Rol | Descripción |
+|---|---|
+| Administrador | Residente del piso y encargado de la gestión general de la aplicación. |
+| Residente | Segundo residente del piso. |
+| Controlador | Persona externa que supervisa las faltas y quejas y actúa como árbitro. |
+
+## 2.1 Administrador
+
+Tendrá todas las funciones normales de un residente y, además:
+
+- Gestionar usuarios.
+- Configurar la aplicación.
+- Crear normas.
+- Gestionar horarios.
+- Crear turnos.
+- Crear tareas periódicas.
+- Configurar el informe semanal.
+- Gestionar categorías y elementos comunes.
+- Convertir quejas en nuevas normas.
+- Consultar registros de actividad.
+- Proponer modificaciones de normas existentes.
+
+## 2.2 Residente
+
+Podrá:
+
+- Consultar las normas.
+- Registrar faltas.
+- Registrarse faltas a sí mismo.
+- Registrar quejas.
+- Añadir fotografías.
+- Consultar faltas y quejas.
+- Consultar el historial.
+- Consultar sus estadísticas.
+- Gestionar comida e inventario.
+- Gestionar listas de compra.
+- Registrar gastos.
+- Consultar y pagar deudas.
+- Consultar turnos.
+- Marcar tareas realizadas.
+- Solicitar excepciones para visitas.
+
+No podrá:
+
+- Crear o modificar normas.
+- Eliminar faltas.
+- Eliminar registros administrativos.
+- Modificar usuarios.
+- Cambiar la configuración general.
+
+## 2.3 Controlador
+
+El controlador tendrá acceso limitado al área de convivencia.
+
+Podrá:
+
+- Recibir el informe semanal.
+- Consultar todas las faltas.
+- Consultar todas las quejas.
+- Consultar fotografías adjuntas.
+- Consultar comentarios de las faltas.
+- Determinar si una falta debe mantenerse.
+- Eliminar una falta cuando considere que no procede.
+- Aprobar o rechazar excepciones relacionadas con visitas.
+- Intervenir en modificaciones de normas ya existentes.
+
+No participará en:
+
+- Inventario de comida.
+- Listas personales de compra.
+- Deudas.
+- Gastos cotidianos.
+- Turnos domésticos.
+
+---
+
+# 3. Reglas de negocio de convivencia
+
+## RN-01. Horario de presencia
+
+De lunes a viernes, a partir de las **21:30**, los dos residentes deberán estar en casa.
+
+La aplicación no utilizará seguimiento GPS. Un incumplimiento se registrará manualmente como una falta.
+
+## RN-02. Horario de silencio
+
+De lunes a viernes existirá silencio obligatorio entre:
+
+**22:00 y 05:30.**
+
+Durante este periodo se establece como principio:
+
+**0 ruido evitable.**
+
+Entre otros, podrán considerarse incumplimientos:
+
+- Música.
+- Televisión a volumen audible.
+- Llamadas.
+- Conversaciones en voz alta.
+- Gritos.
+- Electrodomésticos ruidosos.
+- Ducharse.
+- Entrar haciendo ruido.
+- Actividades que puedan molestar al otro residente.
+
+Solo existirá una categoría de incumplimiento:
+
+**Falta.**
+
+No habrá faltas leves, medias o graves.
+
+---
+
+# 4. Visitas, amigos y parejas
+
+## RN-03. Personas no residentes
+
+No se distinguirá entre:
+
+- Pareja.
+- Amigos.
+- Familiares.
+- Otros invitados.
+
+Todos serán considerados visitantes.
+
+## RN-04. Límite horario
+
+A partir de las **21:30 no podrá permanecer ninguna persona no residente dentro del piso**.
+
+## RN-05. Dormir en el piso
+
+Como norma general:
+
+**ningún visitante podrá quedarse a dormir.**
+
+Esto se aplicará independientemente del día de la semana.
+
+## RN-06. Excepciones
+
+Se podrá solicitar una excepción puntual.
+
+Para aprobarla serán necesarios:
+
+1. Consentimiento del otro residente.
+2. Consentimiento del controlador.
+
+Hasta obtener ambas aprobaciones, la excepción se considerará no autorizada.
+
+La aplicación deberá guardar:
+
+- Solicitante.
+- Motivo.
+- Fecha.
+- Visitante.
+- Respuesta del otro residente.
+- Respuesta del controlador.
+- Estado final.
+
+Estados:
+
+**Pendiente / Aprobada / Rechazada.**
+
+---
+
+# 5. Uso de espacios comunes
+
+Los espacios gestionados serán inicialmente:
+
+- Cocina.
+- Baño.
+- Pasillo.
+
+## RN-07. Cocina
+
+Después de utilizar la cocina deberá quedar completamente recogida.
+
+Será obligatorio dejar:
+
+- Encimera limpia.
+- Vitrocerámica limpia.
+- Fregadero vacío.
+- Mesa limpia.
+- Mesa despejada.
+- Utensilios utilizados correctamente fregados.
+
+Se considera especialmente importante que los utensilios queden **bien fregados**, no únicamente enjuagados o aparentemente limpios.
+
+Su incumplimiento podrá registrarse como falta.
+
+## RN-08. Basura
+
+Existirán turnos para tirar la basura.
+
+El sistema indicará:
+
+- Persona responsable.
+- Día.
+- Estado de la tarea.
+
+## RN-09. Duchas
+
+Existirán turnos de ducha.
+
+La aplicación deberá permitir consultar de forma sencilla quién tiene asignado cada intervalo.
+
+## RN-10. Limpieza
+
+Existirán tareas periódicas relacionadas con:
+
+- Cocina.
+- Baño.
+- Pasillo.
+- Basura.
+- Otras tareas domésticas que se añadan posteriormente.
+
+El administrador podrá configurar:
+
+- Frecuencia.
+- Responsable.
+- Día.
+- Hora, cuando corresponda.
+- Rotación entre residentes.
+
+---
+
+# 6. Gestión de normas
+
+## RF-01
+
+El administrador podrá crear nuevas normas.
+
+Cada norma contendrá al menos:
+
+- Título.
+- Categoría.
+- Descripción.
+- Fecha de entrada en vigor.
+- Autor.
+- Estado.
+
+Categorías iniciales:
+
+- Horarios y silencio.
+- Visitas.
+- Espacios comunes.
+
+## RF-02
+
+Las normas conservarán un historial de versiones.
+
+## RF-03
+
+Nunca se sobrescribirá silenciosamente una norma anterior.
+
+El sistema deberá registrar:
+
+- Qué cambió.
+- Quién solicitó el cambio.
+- Quién lo autorizó.
+- Fecha.
+- Versión anterior.
+- Versión nueva.
+
+## RF-04
+
+Para reconciliar los permisos establecidos, se aplicará el siguiente flujo:
+
+**Administrador propone modificación → Controlador la autoriza → nueva versión entra en vigor.**
+
+De esta manera el administrador mantiene la gestión del sistema y el controlador mantiene su función de supervisión.
+
+---
+
+# 7. Faltas
+
+## RF-05
+
+Cualquiera de los dos residentes podrá registrar una falta.
+
+## RF-06
+
+Un residente podrá registrar una falta contra sí mismo.
+
+## RF-07
+
+Cada falta almacenará:
+
+- Persona que registra la falta.
+- Persona que incumple.
+- Norma incumplida.
+- Fecha.
+- Hora.
+- Descripción.
+- Fotografía opcional.
+
+## RF-08
+
+La fotografía nunca será obligatoria.
+
+Esto permitirá registrar situaciones como:
+
+- Ruido.
+- Llegadas fuera del horario.
+- Visitas.
+- Otros incumplimientos difíciles de fotografiar.
+
+## RF-09
+
+Se podrán añadir comentarios a una falta.
+
+## RF-10
+
+El residente acusado no podrá:
+
+- Rechazarla.
+- Borrarla.
+- Ocultarla.
+- Modificarla.
+
+## RF-11
+
+El controlador decidirá posteriormente si una falta registrada debe permanecer en el historial.
+
+## RF-12
+
+Solamente el controlador podrá eliminar definitivamente una falta.
+
+## RF-13
+
+Toda eliminación deberá quedar registrada en el registro de auditoría.
+
+## RF-14
+
+No existirán puntos, sanciones económicas ni acumulación de niveles.
+
+La finalidad será:
+
+- Dejar constancia.
+- Mantener historial.
+- Generar estadísticas.
+
+---
+
+# 8. Estadísticas de faltas
+
+## RF-15
+
+Cada residente dispondrá de estadísticas como:
+
+- Faltas esta semana.
+- Faltas este mes.
+- Faltas totales.
+- Faltas por categoría.
+- Evolución temporal.
+- Histórico completo.
+
+No existirán sanciones automáticas asociadas a estas estadísticas.
+
+---
+
+# 9. Quejas
+
+## RF-16
+
+Una queja será conceptualmente diferente de una falta.
+
+**Falta:** incumplimiento de una norma existente.
+
+**Queja:** problema de convivencia no necesariamente cubierto por una norma.
+
+## RF-17
+
+Una queja podrá dirigirse:
+
+- A uno de los residentes.
+- De forma general al piso.
+
+## RF-18
+
+Las quejas nunca serán anónimas.
+
+Siempre quedará registrada la persona que la presenta.
+
+## RF-19
+
+Las quejas podrán contener fotografías.
+
+## RF-20
+
+No existirán comentarios dentro de las quejas.
+
+## RF-21
+
+No se utilizarán estados de resolución.
+
+Una queja permanecerá como registro histórico.
+
+## RF-22
+
+Una queja podrá servir como origen de una nueva norma.
+
+El administrador podrá crear una norma partiendo directamente de ella.
+
+---
+
+# 10. Informe semanal
+
+## RF-23
+
+Cada sábado a las **12:00**, hora local, se generará automáticamente el informe semanal.
+
+## RF-24
+
+Los usuarios recibirán una notificación push con el texto:
+
+**“Resumen semanal disponible”.**
+
+La notificación no mostrará información sensible.
+
+## RF-25
+
+El informe de convivencia contendrá:
+
+- Faltas de la semana.
+- Persona que cometió cada falta.
+- Norma incumplida.
+- Fecha y hora.
+- Descripción.
+- Fotografías existentes.
+- Comentarios.
+- Quejas de la semana.
+
+## RF-26
+
+Los residentes podrán consultar además dentro de su resumen:
+
+- Tareas.
+- Turnos.
+- Gastos.
+- Deudas.
+- Información relevante de compras.
+
+## RF-27
+
+El controlador recibirá exclusivamente la información relacionada con:
+
+- Faltas.
+- Quejas.
+- Pruebas.
+- Comentarios.
+
+No tendrá acceso a información económica o alimentaria privada de los residentes.
+
+## RF-28
+
+No existirán notificaciones inmediatas cuando se registre una falta o queja.
+
+La información se comunicará mediante el resumen semanal.
+
+---
+
+# 11. Inventario de alimentos
+
+Existirán tres tipos de productos:
+
+**Personal / Compartido / Hogar**
+
+## RF-29
+
+Cada residente tendrá su propio inventario personal.
+
+Cada producto podrá almacenar:
+
+- Nombre.
+- Cantidad.
+- Unidad.
+- Propietario.
+- Fecha de registro.
+
+## RF-30
+
+Existirá también un inventario compartido.
+
+## RF-31
+
+Los productos comunes del hogar podrán gestionarse independientemente de los alimentos.
+
+Ejemplos:
+
+- Papel higiénico.
+- Detergente.
+- Bolsas de basura.
+- Productos de limpieza.
+
+## RF-32
+
+La aplicación permitirá modificar cantidades cuando un producto:
+
+- Se compre.
+- Se consuma.
+- Se agote.
+
+---
+
+# 12. Listas de compra
+
+## RF-33
+
+Cada residente tendrá una lista de compra personal.
+
+## RF-34
+
+Existirá una lista compartida para alimentos comunes.
+
+## RF-35
+
+Existirá una lista para productos comunes del hogar.
+
+## RF-36
+
+No será obligatorio asignar previamente quién comprará cada producto.
+
+## RF-37
+
+Un elemento podrá marcarse como comprado.
+
+---
+
+# 13. Registro de compras
+
+## RF-38
+
+Cuando alguien realice una compra podrá registrar:
+
+- Concepto.
+- Productos.
+- Importe total.
+- Fecha.
+- Persona que pagó.
+- Participantes.
+- Fotografía del ticket.
+
+## RF-39
+
+La fotografía del ticket será opcional.
+
+## RF-40
+
+Las imágenes deberán comprimirse automáticamente antes de almacenarse.
+
+---
+
+# 14. Gastos compartidos
+
+## RF-41
+
+Los gastos compartidos se dividirán a partes iguales entre sus participantes.
+
+Ejemplo:
+
+Compra = 30 €
+
+Participantes = 2
+
+Cada residente soporta:
+
+**15 €.**
+
+Si uno paga los 30 €, automáticamente se generará una deuda de:
+
+**15 € del otro residente hacia quien pagó.**
+
+---
+
+# 15. Deudas
+
+## RF-42
+
+Existirán dos formas de crear una deuda:
+
+- Automáticamente mediante una compra.
+- Manualmente.
+
+## RF-43
+
+Podrán registrarse deudas entre residentes.
+
+## RF-44
+
+Las deudas contendrán:
+
+- Acreedor.
+- Deudor.
+- Importe original.
+- Importe pagado.
+- Importe pendiente.
+- Concepto.
+- Fecha.
+- Estado.
+
+## RF-45
+
+Se permitirán pagos parciales.
+
+Ejemplo:
+
+Deuda original: 40 €
+
+Pago: 15 €
+
+Pendiente: 25 €.
+
+## RF-46
+
+Una deuda podrá marcarse como completamente pagada.
+
+## RF-47
+
+La aplicación realizará simplificación automática de deudas.
+
+Ejemplo:
+
+A debe 10 € a B.
+
+B debe 6 € a A.
+
+Resultado:
+
+**A debe 4 € a B.**
+
+## RF-48
+
+No existirán pagos integrados mediante Bizum, tarjeta o banco.
+
+La aplicación únicamente registrará y mostrará las cantidades.
+
+---
+
+# 16. Tareas domésticas
+
+## RF-49
+
+El administrador podrá crear tareas periódicas.
+
+## RF-50
+
+Las tareas podrán ser:
+
+- Individuales.
+- Alternas.
+- Periódicas.
+
+## RF-51
+
+Cada tarea podrá contener:
+
+- Nombre.
+- Descripción.
+- Responsable.
+- Frecuencia.
+- Fecha.
+- Hora opcional.
+- Zona.
+- Estado.
+
+## RF-52
+
+Estados iniciales:
+
+**Pendiente / Realizada.**
+
+## RF-53
+
+Las tareas podrán configurarse para rotar automáticamente entre ambos residentes.
+
+Ejemplo:
+
+Semana 1 → Residente A tira la basura.
+
+Semana 2 → Residente B tira la basura.
+
+---
+
+# 17. Historial
+
+## RF-54
+
+La aplicación mantendrá permanentemente:
+
+- Normas.
+- Faltas.
+- Quejas.
+- Compras.
+- Gastos.
+- Deudas.
+- Tareas.
+- Cambios administrativos.
+
+## RF-55
+
+No existirá eliminación automática por antigüedad.
+
+## RF-56
+
+Los dos residentes podrán consultar el historial correspondiente a la convivencia.
+
+---
+
+# 18. Auditoría
+
+## RF-57
+
+Las operaciones sensibles deberán quedar registradas.
+
+Como mínimo:
+
+- Creación de norma.
+- Modificación de norma.
+- Eliminación de falta.
+- Modificación de usuarios.
+- Aprobación/rechazo de excepciones.
+- Cambios importantes de configuración.
+
+Se almacenará:
+
+- Usuario.
+- Acción.
+- Fecha.
+- Hora.
+- Registro afectado.
+
+---
+
+# 19. Usuarios y autenticación
+
+## RF-58
+
+Cada usuario tendrá una cuenta individual.
+
+## RF-59
+
+La autenticación se realizará mediante Google.
+
+## RF-60
+
+Solo personas autorizadas podrán formar parte del piso.
+
+## RF-61
+
+El administrador podrá retirar el acceso a un usuario.
+
+## RF-62
+
+La aplicación se diseñará inicialmente para un único piso.
+
+No será necesario soportar múltiples viviendas en V1.
+
+---
+
+# 20. Requisitos no funcionales
+
+## RNF-01. Plataforma
+
+La primera versión será exclusivamente para:
+
+**Android.**
+
+## RNF-02. Conectividad
+
+La aplicación requerirá conexión a Internet.
+
+No será necesario funcionamiento offline.
+
+## RNF-03. Coste
+
+El presupuesto operativo inicial será:
+
+**0 € al mes.**
+
+Las tecnologías seleccionadas deberán disponer de planes gratuitos suficientes para tres usuarios.
+
+## RNF-04. Idioma
+
+La interfaz inicial estará exclusivamente en español.
+
+## RNF-05. Tema
+
+La aplicación deberá disponer de:
+
+- Modo claro.
+- Modo oscuro.
+
+## RNF-06. Usabilidad
+
+Las principales acciones deberán poder realizarse rápidamente.
+
+Especialmente:
+
+- Registrar falta.
+- Registrar queja.
+- Consultar turnos.
+- Marcar tarea.
+- Añadir producto.
+- Registrar gasto.
+
+## RNF-07. Fotografías
+
+Las fotografías deberán comprimirse antes de subirse al servidor.
+
+## RNF-08. Seguridad
+
+Un usuario nunca podrá acceder mediante manipulación del cliente a funciones correspondientes a otro rol.
+
+Los permisos deberán verificarse también en el servidor/backend.
+
+## RNF-09. Privacidad
+
+La información solo podrá ser consultada por usuarios autorizados del piso.
+
+## RNF-10. Integridad
+
+Los registros sensibles deberán contener fecha, hora y autor.
+
+## RNF-11. Rendimiento
+
+Las pantallas habituales deberían cargar en condiciones normales en aproximadamente menos de dos segundos.
+
+## RNF-12. Escalabilidad
+
+Aunque inicialmente será utilizada únicamente por tres personas, el código deberá estructurarse de forma que en el futuro pueda evolucionar hacia una aplicación pública sin necesidad de reconstruir todo el sistema.
+
+## RNF-13. Mantenibilidad
+
+La aplicación deberá utilizar una estructura modular.
+
+Como mínimo:
+
+- Autenticación.
+- Normas.
+- Faltas.
+- Quejas.
+- Tareas.
+- Inventario.
+- Compras.
+- Gastos.
+- Deudas.
+- Notificaciones.
+- Administración.
+
+## RNF-14. Copias de seguridad
+
+No será necesario implementar un sistema propio de copias de seguridad en la V1.
+
+Esto no impedirá utilizar la protección o redundancia estándar que ofrezca el proveedor de base de datos.
+
+## RNF-15. Trazabilidad
+
+Las operaciones administrativas importantes no podrán desaparecer sin dejar registro.
+
+---
+
+# 21. Entidades principales del sistema
+
+La base de datos deberá contemplar como mínimo:
+
+**Usuario**
+
+**Rol**
+
+**Norma**
+
+**VersiónNorma**
+
+**Falta**
+
+**ComentarioFalta**
+
+**Queja**
+
+**ExcepcionVisita**
+
+**Tarea**
+
+**Turno**
+
+**Producto**
+
+**Inventario**
+
+**ListaCompra**
+
+**ElementoListaCompra**
+
+**Compra**
+
+**Gasto**
+
+**Deuda**
+
+**PagoDeuda**
+
+**InformeSemanal**
+
+**Notificacion**
+
+**RegistroAuditoria**
+
+---
+
+# 22. Pantallas principales previstas
+
+La aplicación necesitará como mínimo:
+
+**Inicio**
+
+Resumen del estado actual.
+
+**Normas**
+
+Consulta de todas las normas vigentes.
+
+**Registrar falta**
+
+Formulario rápido.
+
+**Faltas**
+
+Historial y estadísticas.
+
+**Registrar queja**
+
+Formulario.
+
+**Quejas**
+
+Historial.
+
+**Calendario / Turnos**
+
+Duchas, limpieza y basura.
+
+**Tareas**
+
+Tareas pendientes y realizadas.
+
+**Mi comida**
+
+Inventario personal.
+
+**Compartido**
+
+Inventario común.
+
+**Compra**
+
+Listas personales y comunes.
+
+**Gastos**
+
+Registro de compras.
+
+**Deudas**
+
+Balances y pagos.
+
+**Resumen semanal**
+
+Informe de la semana.
+
+**Administración**
+
+Exclusiva del administrador.
+
+El controlador tendrá una interfaz simplificada centrada en:
+
+**Informe semanal / Faltas / Quejas / Excepciones.**
+
+---
+
+# 23. Principio fundamental de diseño
+
+La aplicación no intentará vigilar automáticamente a los residentes.
+
+No utilizará:
+
+- GPS.
+- Micrófono permanente.
+- Cámara permanente.
+- Seguimiento de actividad.
+
+El sistema funcionará mediante:
+
+**normas claras + registro manual de incumplimientos + evidencia opcional + historial + supervisión del controlador.**
+
+Esto simplifica considerablemente el desarrollo, mejora la privacidad y permite mantener el coste de infraestructura cercano a cero.

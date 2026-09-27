@@ -1,0 +1,10 @@
+node_modules
+.expo
+dist
+coverage
+package-lock.json
+docs/originales
+supabase/migrations
+
+vendor/decode-uri-component/index.cjs
+vendor/decode-uri-component/LICENSE

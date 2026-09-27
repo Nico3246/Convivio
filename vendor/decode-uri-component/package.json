@@ -1,0 +1,8 @@
+{
+  "name": "decode-uri-component",
+  "version": "0.5.0-convivio.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "index.cjs",
+  "license": "MIT"
+}

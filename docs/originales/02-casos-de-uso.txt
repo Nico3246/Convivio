@@ -1,0 +1,1420 @@
+# Casos de uso y flujos funcionales — V1.0
+
+## 1. Estructura general de navegación
+
+La aplicación tendrá una interfaz diferente según el tipo de usuario.
+
+### 1.1 Residente administrador
+
+Navegación principal:
+
+**Inicio · Convivencia · Casa · Compra · Dinero · Administración**
+
+### 1.2 Residente estándar
+
+Navegación principal:
+
+**Inicio · Convivencia · Casa · Compra · Dinero**
+
+### 1.3 Controlador
+
+Interfaz simplificada:
+
+**Resumen · Faltas · Quejas · Excepciones**
+
+---
+
+# 2. Pantalla Inicio
+
+La pantalla Inicio será diferente para residentes y controlador.
+
+## 2.1 Inicio del residente
+
+El objetivo será mostrar únicamente información útil del día.
+
+### Bloque “Hoy”
+
+Mostrará:
+
+- Próxima ducha.
+- Tareas asignadas hoy.
+- Turno de basura.
+- Avisos importantes.
+- Excepciones de visitas pendientes.
+
+### Bloque “Casa”
+
+Mostrará, por ejemplo:
+
+**Hoy limpia el baño: Usuario A**
+
+**Basura: Usuario B**
+
+**Ducha: 20:30–20:50**
+
+### Bloque “Compra”
+
+Mostrará:
+
+- Productos compartidos pendientes.
+- Productos comunes agotándose.
+- Acceso rápido a la lista personal.
+
+### Bloque “Dinero”
+
+Mostrará únicamente el balance neto.
+
+Ejemplo:
+
+**Debes 14,50 €**
+
+o
+
+**Te deben 8,20 €**
+
+### Acciones rápidas
+
+Existirán dos botones destacados:
+
+**+ Añadir falta**
+
+**+ Añadir queja**
+
+---
+
+# 3. Módulo Convivencia
+
+Contendrá:
+
+- Normas.
+- Faltas.
+- Quejas.
+- Excepciones de visitas.
+- Resumen semanal.
+
+---
+
+# 4. CU-01 — Consultar normas
+
+## Actor
+
+Todos los usuarios.
+
+## Flujo
+
+1. Usuario entra en **Convivencia > Normas**.
+2. La aplicación muestra las categorías:
+   - Horarios y silencio.
+   - Visitas.
+   - Espacios comunes.
+3. El usuario selecciona una categoría.
+4. Se muestran las normas vigentes.
+5. Al seleccionar una norma puede consultar:
+   - Título.
+   - Descripción.
+   - Horarios.
+   - Fecha de entrada en vigor.
+   - Última modificación.
+
+Los residentes no podrán modificar las normas desde esta pantalla.
+
+---
+
+# 5. CU-02 — Crear una norma
+
+## Actor
+
+Administrador.
+
+## Flujo
+
+1. Administrador entra en:
+   **Administración > Normas**.
+2. Pulsa:
+   **Nueva norma**.
+3. Introduce:
+   - Título.
+   - Categoría.
+   - Descripción.
+   - Fecha de entrada en vigor.
+4. Confirma.
+5. La norma queda activa.
+6. El sistema registra la creación en auditoría.
+
+---
+
+# 6. CU-03 — Modificar una norma existente
+
+## Actor principal
+
+Administrador.
+
+## Actor secundario
+
+Controlador.
+
+## Flujo
+
+1. Administrador abre una norma.
+2. Pulsa:
+   **Proponer modificación**.
+3. Realiza los cambios.
+4. Introduce opcionalmente el motivo.
+5. Envía la propuesta.
+6. La norma actual continúa vigente.
+7. El controlador visualiza:
+   **Cambio de norma pendiente**.
+8. Puede consultar:
+   - Norma actual.
+   - Nueva propuesta.
+   - Diferencias.
+9. El controlador pulsa:
+   **Aprobar**
+   o
+   **Rechazar**.
+
+### Si aprueba
+
+Se crea una nueva versión.
+
+La nueva versión pasa a ser la vigente.
+
+### Si rechaza
+
+La norma anterior permanece sin cambios.
+
+Todo queda registrado en auditoría.
+
+---
+
+# 7. CU-04 — Registrar una falta
+
+## Actor
+
+Cualquiera de los dos residentes.
+
+## Flujo principal
+
+1. Usuario pulsa:
+   **+ Añadir falta**.
+2. Selecciona:
+   **Quién ha incumplido**.
+3. Selecciona:
+   **Norma incumplida**.
+4. La aplicación introduce automáticamente:
+   - Fecha.
+   - Hora.
+5. Usuario escribe una descripción.
+6. Opcionalmente añade una fotografía.
+7. Puede revisar todos los datos.
+8. Pulsa:
+   **Registrar falta**.
+9. Aparece confirmación:
+   **Falta registrada correctamente**.
+10. La falta entra en el historial.
+
+No se envía ninguna notificación inmediata.
+
+---
+
+# 8. Formulario de falta
+
+Campos:
+
+**Persona responsable**
+
+Obligatorio.
+
+**Norma incumplida**
+
+Obligatorio.
+
+**Fecha**
+
+Automática pero editable.
+
+**Hora**
+
+Automática pero editable.
+
+**Descripción**
+
+Obligatoria.
+
+**Fotografía**
+
+Opcional.
+
+La fotografía podrá:
+
+- Tomarse con cámara.
+- Seleccionarse de galería.
+
+Antes de subirla será comprimida.
+
+---
+
+# 9. Estados de una falta
+
+Una falta podrá encontrarse en:
+
+**Registrada**
+
+Aún no revisada por el controlador.
+
+**Mantenida**
+
+El controlador considera que debe permanecer.
+
+**Eliminada por el controlador**
+
+No aparecerá como falta válida en estadísticas, aunque el evento de eliminación permanecerá en auditoría.
+
+---
+
+# 10. CU-05 — Consultar faltas
+
+## Actor
+
+Los dos residentes y controlador.
+
+## Vista
+
+Se podrán filtrar por:
+
+- Semana.
+- Mes.
+- Persona.
+- Norma.
+- Categoría.
+
+Cada tarjeta mostrará:
+
+**Persona**
+
+**Norma**
+
+**Fecha**
+
+**Descripción resumida**
+
+**Foto disponible**, si existe.
+
+Al pulsarla se accederá al detalle.
+
+---
+
+# 11. CU-06 — Añadir comentario a una falta
+
+## Actor
+
+Residentes.
+
+## Flujo
+
+1. Usuario abre una falta.
+2. Pulsa:
+   **Añadir comentario**.
+3. Escribe el comentario.
+4. Envía.
+5. Se guarda:
+   - Texto.
+   - Autor.
+   - Fecha.
+   - Hora.
+
+Los comentarios no podrán modificar la información original.
+
+---
+
+# 12. CU-07 — Revisar una falta
+
+## Actor
+
+Controlador.
+
+## Flujo
+
+1. Controlador abre una falta.
+2. Puede consultar:
+   - Norma.
+   - Persona.
+   - Autor de la falta.
+   - Descripción.
+   - Fecha y hora.
+   - Fotografía.
+   - Comentarios.
+3. Decide entre:
+
+**Mantener falta**
+
+o
+
+**Eliminar falta**.
+
+### Si pulsa “Mantener”
+
+La falta pasa a estado:
+
+**Mantenida**.
+
+### Si pulsa “Eliminar”
+
+Se solicitará confirmación.
+
+Opcionalmente podrá indicar un motivo.
+
+La falta se retirará de las estadísticas.
+
+La acción quedará registrada.
+
+---
+
+# 13. CU-08 — Consultar estadísticas
+
+## Actor
+
+Residentes.
+
+Cada usuario tendrá una pantalla:
+
+**Estadísticas de convivencia**
+
+Con:
+
+- Faltas esta semana.
+- Faltas este mes.
+- Faltas totales.
+- Distribución por categoría.
+- Evolución mensual.
+- Historial.
+
+También podrá consultar las estadísticas del otro residente.
+
+---
+
+# 14. CU-09 — Registrar queja
+
+## Actor
+
+Cualquiera de los residentes.
+
+## Flujo
+
+1. Usuario pulsa:
+   **+ Añadir queja**.
+2. Selecciona:
+
+**Dirigida a una persona**
+
+o
+
+**Queja general**.
+
+3. Introduce:
+   - Título.
+   - Descripción.
+4. Opcionalmente añade fotografía.
+5. Pulsa:
+   **Registrar queja**.
+6. La queja queda registrada.
+
+No se envía una notificación inmediata.
+
+---
+
+# 15. CU-10 — Consultar quejas
+
+## Actor
+
+Residentes y controlador.
+
+Cada queja mostrará:
+
+- Autor.
+- Destinatario, si existe.
+- Fecha.
+- Título.
+- Descripción.
+- Fotografía, si existe.
+
+No existirán:
+
+- Comentarios.
+- Estados.
+- Reacciones.
+
+---
+
+# 16. CU-11 — Convertir queja en norma
+
+## Actor
+
+Administrador.
+
+## Flujo
+
+1. Administrador abre una queja.
+2. Pulsa:
+   **Crear norma desde esta queja**.
+3. Se abre el formulario de nueva norma.
+4. La descripción de la queja se utiliza como referencia.
+5. El administrador configura la norma.
+6. La guarda.
+
+La queja original permanece en el historial.
+
+---
+
+# 17. CU-12 — Solicitar excepción para una visita
+
+## Actor
+
+Residente.
+
+## Flujo
+
+1. Usuario entra en:
+   **Convivencia > Excepciones**.
+2. Pulsa:
+   **Solicitar excepción**.
+3. Introduce:
+   - Fecha.
+   - Visitante.
+   - Motivo.
+4. Envía la solicitud.
+
+Estado inicial:
+
+**Pendiente**.
+
+La aplicación deberá obtener dos aprobaciones:
+
+- Otro residente.
+- Controlador.
+
+---
+
+# 18. CU-13 — Resolver excepción de visita
+
+## Actores
+
+Otro residente.
+
+Controlador.
+
+Cada uno podrá pulsar:
+
+**Aprobar**
+
+o
+
+**Rechazar**.
+
+### Regla de decisión
+
+Solo estará:
+
+**APROBADA**
+
+si ambos aprueban.
+
+Si cualquiera rechaza:
+
+**RECHAZADA**.
+
+No será necesario esperar a la segunda respuesta una vez exista un rechazo.
+
+---
+
+# 19. Vista de excepción
+
+Ejemplo:
+
+**Excepción para visita**
+
+Solicitada por: Usuario A
+
+Fecha: sábado 10 de octubre
+
+Motivo: visita familiar excepcional
+
+Otro residente: ✅ Aprobado
+
+Controlador: ⏳ Pendiente
+
+Estado:
+
+**Pendiente**
+
+---
+
+# 20. Módulo Casa
+
+Contendrá:
+
+- Calendario.
+- Duchas.
+- Limpieza.
+- Basura.
+- Tareas.
+
+---
+
+# 21. CU-14 — Consultar calendario doméstico
+
+## Actor
+
+Residentes.
+
+Se mostrará un calendario semanal.
+
+Por cada día podrán aparecer:
+
+- Turnos de ducha.
+- Limpieza.
+- Basura.
+- Otras tareas.
+
+Ejemplo:
+
+### Lunes
+
+20:00 — Ducha Usuario A
+
+20:30 — Ducha Usuario B
+
+Usuario A — Cocina
+
+Usuario B — Basura
+
+---
+
+# 22. CU-15 — Configurar turnos de ducha
+
+## Actor
+
+Administrador.
+
+El administrador podrá crear franjas horarias.
+
+Ejemplo:
+
+20:00–20:20 — Usuario A
+
+20:20–20:40 — Usuario B
+
+Los turnos podrán:
+
+- Repetirse semanalmente.
+- Modificarse.
+- Intercambiarse manualmente.
+
+---
+
+# 23. CU-16 — Crear tarea periódica
+
+## Actor
+
+Administrador.
+
+Campos:
+
+- Nombre.
+- Zona.
+- Descripción.
+- Frecuencia.
+- Responsable.
+- Rotación.
+- Día.
+- Hora opcional.
+
+Ejemplo:
+
+**Limpiar baño**
+
+Frecuencia: semanal.
+
+Rotación: sí.
+
+Semana 1: Usuario A.
+
+Semana 2: Usuario B.
+
+---
+
+# 24. CU-17 — Completar tarea
+
+## Actor
+
+Residente responsable.
+
+## Flujo
+
+1. Usuario abre:
+   **Tareas de hoy**.
+2. Selecciona la tarea.
+3. Pulsa:
+   **Marcar como realizada**.
+4. El sistema registra:
+   - Usuario.
+   - Fecha.
+   - Hora.
+
+La tarea desaparece de pendientes y aparece en realizadas.
+
+---
+
+# 25. CU-18 — Turno de basura
+
+La basura funcionará como una tarea periódica especial.
+
+La aplicación mostrará claramente:
+
+**Hoy tira la basura: Usuario A**
+
+Al completarla:
+
+**✓ Basura retirada**
+
+El siguiente turno se asignará conforme a la rotación configurada.
+
+---
+
+# 26. Módulo Compra
+
+Estará dividido en:
+
+**Mi comida**
+
+**Compartido**
+
+**Hogar**
+
+**Listas**
+
+---
+
+# 27. CU-19 — Añadir producto personal
+
+## Actor
+
+Residente.
+
+Campos:
+
+- Producto.
+- Cantidad.
+- Unidad.
+
+Ejemplo:
+
+**Leche**
+
+Cantidad: 2
+
+Unidad: litros.
+
+El propietario se asignará automáticamente al usuario.
+
+---
+
+# 28. CU-20 — Añadir producto compartido
+
+## Actor
+
+Residentes.
+
+Campos:
+
+- Producto.
+- Cantidad.
+- Unidad.
+
+El producto quedará identificado como:
+
+**Compartido**.
+
+---
+
+# 29. CU-21 — Modificar cantidad
+
+Desde cualquier producto podrá indicarse:
+
+**+**
+
+**−**
+
+o introducir manualmente una cantidad.
+
+Si llega a cero:
+
+**Producto agotado**.
+
+Opcionalmente podrá añadirse directamente a la lista de compra.
+
+---
+
+# 30. CU-22 — Añadir producto a una lista
+
+Existirán:
+
+- Mi lista.
+- Lista compartida.
+- Lista del hogar.
+
+Campos:
+
+- Producto.
+- Cantidad.
+- Unidad.
+
+Ejemplo:
+
+**Papel higiénico — 12 rollos**
+
+---
+
+# 31. CU-23 — Marcar producto como comprado
+
+## Flujo
+
+1. Usuario abre lista.
+2. Marca el producto.
+3. Pulsa:
+   **Comprado**.
+4. El producto desaparece de pendientes.
+5. El sistema puede ofrecer:
+
+**¿Añadir al inventario?**
+
+---
+
+# 32. Módulo Dinero
+
+Contendrá:
+
+- Gastos.
+- Deudas.
+- Historial.
+
+---
+
+# 33. CU-24 — Registrar compra compartida
+
+## Actor
+
+Residente.
+
+## Flujo
+
+1. Usuario pulsa:
+   **Registrar gasto**.
+2. Introduce:
+   - Concepto.
+   - Importe.
+   - Fecha.
+   - Participantes.
+3. Opcionalmente:
+   - Productos.
+   - Foto del ticket.
+4. Pulsa:
+   **Guardar**.
+5. El sistema divide automáticamente el gasto.
+
+---
+
+# 34. Ejemplo de reparto
+
+Usuario A compra:
+
+**Compra supermercado**
+
+Total:
+
+40 €.
+
+Participantes:
+
+Usuario A + Usuario B.
+
+Reparto:
+
+20 € por persona.
+
+Como A ha pagado los 40 €:
+
+**Usuario B debe 20 € a Usuario A.**
+
+---
+
+# 35. CU-25 — Crear deuda manual
+
+## Actor
+
+Residente.
+
+Campos:
+
+- Quién debe.
+- A quién.
+- Importe.
+- Concepto.
+- Fecha.
+
+Ejemplo:
+
+Usuario B debe a Usuario A:
+
+**8 € — Cena**
+
+---
+
+# 36. CU-26 — Consultar balance
+
+La pantalla principal de Dinero mostrará el resultado simplificado.
+
+Ejemplo:
+
+**Te deben 34,50 €**
+
+Debajo:
+
+Usuario B → Tú
+
+34,50 €.
+
+---
+
+# 37. CU-27 — Registrar pago parcial
+
+Ejemplo:
+
+Deuda:
+
+40 €.
+
+Usuario paga:
+
+15 €.
+
+El usuario selecciona:
+
+**Registrar pago**.
+
+Introduce:
+
+15 €.
+
+Resultado:
+
+Pagado: 15 €.
+
+Pendiente: 25 €.
+
+---
+
+# 38. CU-28 — Liquidar deuda
+
+Cuando se paga completamente:
+
+Usuario pulsa:
+
+**Marcar como pagada**.
+
+Estado:
+
+**Liquidada**.
+
+Se conserva el registro histórico.
+
+---
+
+# 39. CU-29 — Simplificar deudas
+
+El sistema calculará automáticamente el balance.
+
+Si:
+
+A debe 10 € a B.
+
+B debe 6 € a A.
+
+La pantalla principal mostrará:
+
+**A debe 4 € a B.**
+
+Los movimientos originales se conservarán en el historial.
+
+---
+
+# 40. CU-30 — Generar informe semanal
+
+## Ejecución automática
+
+Todos los sábados a las:
+
+**12:00**
+
+la aplicación generará el resumen correspondiente a la semana.
+
+---
+
+# 41. Periodo incluido en el informe
+
+Para evitar ambigüedades, se establece:
+
+**Desde el sábado anterior a las 12:00 hasta el sábado actual a las 11:59:59.**
+
+De esta forma cada registro pertenece exactamente a un informe.
+
+---
+
+# 42. Informe semanal del residente
+
+Contendrá:
+
+## Convivencia
+
+- Faltas.
+- Quejas.
+- Fotografías.
+- Comentarios.
+
+## Casa
+
+- Tareas realizadas.
+- Tareas pendientes.
+- Turnos relevantes.
+
+## Compra
+
+- Compras compartidas de la semana.
+
+## Dinero
+
+- Gastos.
+- Pagos.
+- Saldo pendiente.
+
+---
+
+# 43. Informe semanal del controlador
+
+El controlador únicamente visualizará:
+
+### Faltas
+
+- Persona.
+- Norma.
+- Fecha.
+- Descripción.
+- Fotografía.
+- Comentarios.
+
+### Quejas
+
+- Autor.
+- Destinatario.
+- Descripción.
+- Fotografía.
+
+No visualizará:
+
+- Comida.
+- Inventario.
+- Gastos.
+- Deudas.
+- Listas de compra.
+
+---
+
+# 44. CU-31 — Notificación semanal
+
+A las 12:00 del sábado, después de generar el informe:
+
+Todos los usuarios recibirán:
+
+**Resumen semanal disponible**
+
+Al pulsar la notificación:
+
+se abrirá directamente el informe.
+
+---
+
+# 45. Módulo Administración
+
+Será visible únicamente para el administrador.
+
+Contendrá:
+
+- Usuarios.
+- Normas.
+- Turnos.
+- Tareas.
+- Configuración.
+- Auditoría.
+
+---
+
+# 46. CU-32 — Gestionar usuarios
+
+El administrador podrá consultar las tres cuentas.
+
+Podrá:
+
+- Añadir.
+- Desactivar.
+- Reactivar.
+
+No podrá cambiar libremente un usuario de residente a controlador sin confirmación.
+
+---
+
+# 47. CU-33 — Consultar auditoría
+
+El administrador podrá visualizar eventos como:
+
+**24/09/2026 18:15**
+
+Usuario: Administrador
+
+Acción:
+
+Creó la norma “Silencio nocturno”.
+
+---
+
+**26/09/2026 12:30**
+
+Usuario: Controlador
+
+Acción:
+
+Eliminó falta #23.
+
+---
+
+# 48. Flujo completo de una falta
+
+El ciclo será:
+
+**1. Se produce un incumplimiento**
+
+↓
+
+**2. Un residente pulsa “Añadir falta”**
+
+↓
+
+**3. Selecciona persona + norma**
+
+↓
+
+**4. Añade descripción**
+
+↓
+
+**5. Añade fotografía opcional**
+
+↓
+
+**6. Falta registrada**
+
+↓
+
+**7. Se incorpora al resumen semanal**
+
+↓
+
+**8. Sábado 12:00 → controlador recibe informe**
+
+↓
+
+**9. Controlador revisa la falta**
+
+↓
+
+**10. Mantener / Eliminar**
+
+↓
+
+**11. Estadísticas e histórico se actualizan**
+
+---
+
+# 49. Flujo completo de una queja
+
+**Problema de convivencia**
+
+↓
+
+**Añadir queja**
+
+↓
+
+**Persona/general**
+
+↓
+
+**Descripción**
+
+↓
+
+**Foto opcional**
+
+↓
+
+**Queja registrada**
+
+↓
+
+**Informe semanal**
+
+↓
+
+Puede terminar ahí
+
+o
+
+↓
+
+**Administrador decide crear nueva norma**
+
+↓
+
+**Nueva regla de convivencia**
+
+---
+
+# 50. Flujo completo de excepción de visita
+
+**Solicitar excepción**
+
+↓
+
+Fecha + visitante + motivo
+
+↓
+
+**Pendiente**
+
+↙                     ↘
+
+Otro residente       Controlador
+
+↘                     ↙
+
+Aprobar/rechazar
+
+↓
+
+### Ambos aprueban
+
+**EXCEPCIÓN APROBADA**
+
+### Cualquiera rechaza
+
+**EXCEPCIÓN RECHAZADA**
+
+---
+
+# 51. Flujo de compra compartida
+
+**Añadir productos a lista**
+
+↓
+
+Uno de los residentes compra
+
+↓
+
+Marca productos comprados
+
+↓
+
+Registra gasto
+
+↓
+
+Añade ticket opcional
+
+↓
+
+Sistema divide gasto
+
+↓
+
+Genera deuda
+
+↓
+
+Actualiza balance
+
+↓
+
+Pago parcial/completo
+
+↓
+
+Deuda liquidada.
+
+---
+
+# 52. Permisos definitivos
+
+| Función | Admin | Residente | Controlador |
+|---|:---:|:---:|:---:|
+| Consultar normas | ✓ | ✓ | ✓ |
+| Crear norma | ✓ | ✗ | ✗ |
+| Proponer modificación | ✓ | ✗ | ✗ |
+| Aprobar modificación | ✗ | ✗ | ✓ |
+| Añadir falta | ✓ | ✓ | ✗ |
+| Añadir queja | ✓ | ✓ | ✗ |
+| Comentar falta | ✓ | ✓ | ✗ |
+| Eliminar falta | ✗ | ✗ | ✓ |
+| Ver estadísticas | ✓ | ✓ | ✓ |
+| Solicitar excepción | ✓ | ✓ | ✗ |
+| Aprobar excepción | ✓* | ✓* | ✓ |
+| Gestionar turnos | ✓ | ✗ | ✗ |
+| Completar tareas | ✓ | ✓ | ✗ |
+| Gestionar inventario | ✓ | ✓ | ✗ |
+| Gestionar compras | ✓ | ✓ | ✗ |
+| Gestionar deudas | ✓ | ✓ | ✗ |
+| Ver informe completo | ✓ | ✓ | ✗ |
+| Ver informe convivencia | ✓ | ✓ | ✓ |
+| Gestión de usuarios | ✓ | ✗ | ✗ |
+| Consultar auditoría | ✓ | ✗ | ✗ |
+
+\*El residente que no solicita la excepción es quien debe aprobarla.
+
+---
+
+# 53. Estructura de navegación final
+
+## Residente
+
+### Inicio
+
+Resumen del día.
+
+### Convivencia
+
+Normas  
+Faltas  
+Quejas  
+Excepciones  
+Resumen semanal
+
+### Casa
+
+Calendario  
+Duchas  
+Limpieza  
+Basura  
+Tareas
+
+### Compra
+
+Mi comida  
+Compartido  
+Hogar  
+Listas
+
+### Dinero
+
+Balance  
+Gastos  
+Deudas  
+Historial
+
+---
+
+## Administrador
+
+Las mismas secciones más:
+
+### Administración
+
+Usuarios  
+Normas  
+Turnos  
+Tareas  
+Configuración  
+Auditoría
+
+---
+
+## Controlador
+
+### Resumen
+
+Informe semanal.
+
+### Faltas
+
+Histórico de faltas.
+
+### Quejas
+
+Histórico de quejas.
+
+### Excepciones
+
+Solicitudes pendientes e histórico.
+
+---
+
+# 54. Criterio general de diseño
+
+La aplicación deberá priorizar tres cosas:
+
+**Rapidez**
+
+Registrar una falta, una queja, una tarea o un gasto deberá requerir pocos pasos.
+
+**Claridad**
+
+Siempre deberá estar claro:
+
+- Qué corresponde hacer.
+- A quién.
+- Cuándo.
+- Qué normas están vigentes.
+
+**Trazabilidad**
+
+Las decisiones relacionadas con convivencia deberán quedar registradas para evitar discusiones posteriores sobre:
+
+- Qué ocurrió.
+- Cuándo ocurrió.
+- Qué norma estaba vigente.
+- Quién realizó una acción.
+- Qué decidió el controlador.
+
+---
+
+# 55. Flujo conceptual de toda la aplicación
+
+La aplicación puede entenderse mediante cinco ciclos:
+
+### CONVIVENCIA
+
+Norma → Incumplimiento → Falta → Informe → Controlador → Histórico.
+
+### PROBLEMAS
+
+Problema → Queja → Informe → posible nueva norma.
+
+### CASA
+
+Tarea → Responsable → Realización → Histórico → siguiente turno.
+
+### COMPRA
+
+Necesidad → Lista → Compra → Inventario.
+
+### DINERO
+
+Compra → Gasto → Reparto → Deuda → Pago → Liquidación.

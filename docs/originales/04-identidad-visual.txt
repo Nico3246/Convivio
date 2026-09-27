@@ -1,0 +1,943 @@
+# Identidad visual — V1.0
+
+## 1. Nombre provisional
+
+Propongo trabajar inicialmente con:
+
+# PisoClaro
+
+La idea del nombre es transmitir:
+
+- reglas claras;
+- organización;
+- transparencia;
+- convivencia;
+- control sin parecer una aplicación punitiva.
+
+También encaja con todos los módulos: normas, tareas, compras y dinero.
+
+Otras alternativas que podemos valorar más adelante:
+
+| Nombre | Enfoque |
+|---|---|
+| PisoClaro | Transparencia y convivencia |
+| Convivio | Más moderno y general |
+| Pacta | Centrado en acuerdos |
+| MiPiso | Muy directo |
+| PisoSync | Más tecnológico |
+| Convive | Simple y amigable |
+
+Para continuar el diseño usaré **PisoClaro** como nombre provisional.
+
+---
+
+# 2. Personalidad visual
+
+La aplicación deberá transmitir:
+
+**Orden + claridad + confianza + neutralidad**
+
+No deberá parecer:
+
+- una app policial;
+- una aplicación de castigos;
+- una aplicación infantil;
+- una herramienta empresarial demasiado fría.
+
+El estilo será moderno y limpio, parecido a aplicaciones actuales de productividad.
+
+---
+
+# 3. Color principal
+
+Color principal recomendado:
+
+**Azul índigo**
+
+Referencia:
+
+`#4F46E5`
+
+Se utilizará en:
+
+- botones principales;
+- navegación activa;
+- elementos seleccionados;
+- acciones principales;
+- logotipo.
+
+Motivo:
+
+El azul transmite confianza y organización, mientras que el tono índigo aporta un aspecto moderno.
+
+---
+
+# 4. Paleta completa
+
+## Principal
+
+`#4F46E5`
+
+Índigo principal.
+
+## Principal oscuro
+
+`#3730A3`
+
+Para elementos presionados o estados activos.
+
+## Principal claro
+
+`#EEF2FF`
+
+Para fondos de elementos seleccionados.
+
+---
+
+## Éxito
+
+`#16A34A`
+
+Usos:
+
+- tarea completada;
+- excepción aprobada;
+- deuda liquidada;
+- acción realizada correctamente.
+
+---
+
+## Advertencia
+
+`#F59E0B`
+
+Usos:
+
+- tarea pendiente;
+- solicitud pendiente;
+- aviso importante.
+
+---
+
+## Error / falta
+
+`#DC2626`
+
+Usos:
+
+- faltas;
+- acciones destructivas;
+- eliminación.
+
+El rojo no deberá dominar visualmente la aplicación.
+
+---
+
+# 5. Colores neutros — modo claro
+
+Fondo principal:
+
+`#F8FAFC`
+
+Tarjetas:
+
+`#FFFFFF`
+
+Texto principal:
+
+`#0F172A`
+
+Texto secundario:
+
+`#64748B`
+
+Bordes:
+
+`#E2E8F0`
+
+Elementos desactivados:
+
+`#94A3B8`
+
+---
+
+# 6. Modo oscuro
+
+Fondo:
+
+`#0F172A`
+
+Tarjetas:
+
+`#1E293B`
+
+Texto principal:
+
+`#F8FAFC`
+
+Texto secundario:
+
+`#94A3B8`
+
+Bordes:
+
+`#334155`
+
+El índigo seguirá utilizándose como color principal.
+
+---
+
+# 7. Tipografía
+
+Utilizaremos:
+
+# Inter
+
+Es moderna, muy legible y funciona especialmente bien en interfaces.
+
+Jerarquía:
+
+| Elemento | Tamaño |
+|---|---:|
+| Título principal | 28 px |
+| Título pantalla | 24 px |
+| Título tarjeta | 18 px |
+| Texto normal | 16 px |
+| Texto secundario | 14 px |
+| Etiquetas | 12 px |
+
+Pesos principales:
+
+**Regular 400**
+
+**Medium 500**
+
+**Semibold 600**
+
+**Bold 700**
+
+---
+
+# 8. Bordes
+
+La aplicación utilizará elementos bastante redondeados.
+
+Tarjetas:
+
+**16 px**
+
+Botones:
+
+**12 px**
+
+Campos:
+
+**12 px**
+
+Modales:
+
+**20 px**
+
+El diseño no deberá abusar de formas completamente redondas.
+
+---
+
+# 9. Espaciado
+
+Se utilizará una cuadrícula basada en múltiplos de:
+
+**4 px**
+
+Espaciados principales:
+
+`4 · 8 · 12 · 16 · 24 · 32`
+
+Margen lateral estándar:
+
+**20 px**
+
+Separación habitual entre tarjetas:
+
+**12–16 px**
+
+---
+
+# 10. Iconografía
+
+Usaremos iconos simples de línea.
+
+Una opción adecuada en desarrollo sería:
+
+**Lucide Icons**
+
+Ejemplos:
+
+Casa → House
+
+Normas → ScrollText
+
+Faltas → TriangleAlert
+
+Quejas → MessageSquareWarning
+
+Tareas → CheckSquare
+
+Ducha → ShowerHead
+
+Compra → ShoppingCart
+
+Dinero → Wallet
+
+Perfil → User
+
+Administración → Settings
+
+---
+
+# 11. Logo
+
+El logo deberá evitar representar directamente:
+
+- castigos;
+-警告;
+- multas;
+- vigilancia.
+
+Concepto recomendado:
+
+Una **casa minimalista combinada con un check**.
+
+Representará:
+
+**casa + organización + cumplimiento**
+
+---
+
+# 12. Icono de aplicación
+
+Concepto:
+
+```text
+┌─────────────────┐
+│                 │
+│       /\        │
+│      /  \       │
+│     / ✓  \      │
+│    /______\     │
+│                 │
+└─────────────────┘
+```
+
+No literalmente así, pero esa será la idea conceptual.
+
+Fondo:
+
+**Índigo**
+
+Símbolo:
+
+**Blanco**
+
+Será reconocible incluso a tamaños pequeños.
+
+---
+
+# 13. Pantalla de login
+
+Aspecto:
+
+```text
+┌─────────────────────────────────┐
+│                                 │
+│                                 │
+│              ⌂✓                 │
+│                                 │
+│           PisoClaro             │
+│                                 │
+│     Tu piso, bien organizado    │
+│                                 │
+│                                 │
+│   ┌─────────────────────────┐   │
+│   │  G  Continuar con Google│   │
+│   └─────────────────────────┘   │
+│                                 │
+│                                 │
+└─────────────────────────────────┘
+```
+
+Muy sencilla.
+
+No necesitamos:
+
+- registro tradicional;
+- contraseña;
+- formularios largos.
+
+---
+
+# 14. Pantalla Inicio definitiva
+
+El inicio deberá tener aspecto de dashboard doméstico.
+
+```text
+┌─────────────────────────────────┐
+│ 17:45                      🔔 👤 │
+│                                 │
+│ Hola, Usuario                   │
+│ Jueves, 24 de septiembre        │
+│                                 │
+│ ┌─────────────────────────────┐ │
+│ │ HOY                         │ │
+│ │                             │ │
+│ │ 🚿 Ducha                    │ │
+│ │ 20:00 - 20:20               │ │
+│ │                             │ │
+│ │ 🗑 Te toca tirar la basura  │ │
+│ │                             │ │
+│ │ 🧹 Limpiar cocina           │ │
+│ │             [Completar]     │ │
+│ └─────────────────────────────┘ │
+│                                 │
+│ Convivencia                     │
+│                                 │
+│ ┌─────────────┐ ┌─────────────┐ │
+│ │ ⚠ Añadir    │ │ 💬 Añadir   │ │
+│ │ falta       │ │ queja       │ │
+│ └─────────────┘ └─────────────┘ │
+│                                 │
+│ ┌─────────────────────────────┐ │
+│ │ 🛒 Compra                   │ │
+│ │ 4 productos pendientes   > │ │
+│ └─────────────────────────────┘ │
+│                                 │
+│ ┌─────────────────────────────┐ │
+│ │ 💶 Balance                  │ │
+│ │ Debes 14,50 €             >│ │
+│ └─────────────────────────────┘ │
+│                                 │
+├─────────────────────────────────┤
+│  🏠      ⚖       🧹      🛒     💶 │
+└─────────────────────────────────┘
+```
+
+---
+
+# 15. Tarjeta “Hoy”
+
+Será el elemento dominante de Inicio.
+
+Deberá mostrar exclusivamente cosas relevantes para las próximas horas.
+
+Ejemplos:
+
+**20:00 · Ducha**
+
+**Hoy · Tirar basura**
+
+**Antes de las 21:00 · Limpiar baño**
+
+No aparecerán tareas futuras innecesarias.
+
+---
+
+# 16. Añadir falta
+
+Visualmente será una acción importante, pero no el elemento dominante de toda la aplicación.
+
+Botón:
+
+**⚠ Añadir falta**
+
+Fondo:
+
+rojo muy claro.
+
+Texto/icono:
+
+rojo.
+
+Esto la diferenciará de una acción destructiva real.
+
+---
+
+# 17. Nueva falta
+
+Diseño:
+
+```text
+← Nueva falta
+
+¿Quién incumplió?
+
+┌─────────────────────────────────┐
+│ Usuario B                    ▼  │
+└─────────────────────────────────┘
+
+Norma
+
+┌─────────────────────────────────┐
+│ Silencio nocturno            ▼  │
+└─────────────────────────────────┘
+
+Fecha y hora
+
+24 septiembre · 23:18
+
+Descripción
+
+┌─────────────────────────────────┐
+│ Describe lo ocurrido...         │
+│                                 │
+│                                 │
+└─────────────────────────────────┘
+
+Prueba
+
+┌───────────────┐ ┌───────────────┐
+│ 📷 Cámara     │ │ 🖼 Galería    │
+└───────────────┘ └───────────────┘
+
+
+┌─────────────────────────────────┐
+│        Registrar falta          │
+└─────────────────────────────────┘
+```
+
+No habrá elementos innecesarios.
+
+---
+
+# 18. Tarjetas de faltas
+
+Ejemplo:
+
+```text
+┌─────────────────────────────────┐
+│ ⚠ Silencio nocturno             │
+│                                 │
+│ Usuario B                       │
+│ 23 sep · 23:18                  │
+│                                 │
+│ Música durante el horario...    │
+│                                 │
+│ 📷 Prueba                       │
+│                                 │
+│ ● Pendiente de revisión         │
+└─────────────────────────────────┘
+```
+
+La fotografía no ocupará toda la tarjeta.
+
+---
+
+# 19. Estados
+
+Pendiente:
+
+**ámbar**
+
+Mantenida:
+
+**rojo suave**
+
+Eliminada:
+
+**gris**
+
+Aprobada:
+
+**verde**
+
+Pagada:
+
+**verde**
+
+Pendiente de pago:
+
+**ámbar**
+
+---
+
+# 20. Diseño del módulo Casa
+
+Este módulo deberá sentirse más parecido a una agenda.
+
+Cabecera:
+
+**Esta semana**
+
+Después:
+
+```text
+L  M  X  J  V  S  D
+21 22 23 24 25 26 27
+         ●
+```
+
+Debajo:
+
+```text
+HOY
+
+20:00
+🚿 Ducha
+
+──────────────
+
+Antes de 21:00
+🧹 Limpiar baño
+
+[ Completar ]
+
+──────────────
+
+🗑 Basura
+Usuario B
+```
+
+---
+
+# 21. Diseño del inventario
+
+Los productos no necesitarán grandes imágenes.
+
+Ejemplo:
+
+```text
+Leche
+
+2 L
+
+              [-]  2  [+]
+```
+
+Esto hará el inventario mucho más rápido de gestionar.
+
+---
+
+# 22. Productos agotados
+
+```text
+Leche
+
+0 L
+
+AGOTADO
+
+[ + Añadir a la compra ]
+```
+
+El usuario podrá enviar directamente el producto a su lista correspondiente.
+
+---
+
+# 23. Diseño de Dinero
+
+El saldo debe dominar la pantalla.
+
+```text
+DINERO
+
+Balance actual
+
+        -14,50 €
+
+Debes 14,50 €
+
+─────────────────────
+
+[ Registrar gasto ]
+
+─────────────────────
+
+Últimos movimientos
+
+Supermercado
+-19,20 €
+
+Pago
++10,00 €
+
+Cena
+-5,30 €
+```
+
+---
+
+# 24. Colores del balance
+
+No utilizaremos rojo intenso simplemente porque alguien deba dinero.
+
+Si debe:
+
+**texto neutro/ámbar**
+
+Si le deben:
+
+**verde**
+
+El rojo se reservará para problemas importantes.
+
+---
+
+# 25. Administración
+
+Será visualmente más funcional.
+
+```text
+Administración
+
+Normas                 >
+Usuarios                >
+Turnos                  >
+Tareas                  >
+Configuración           >
+Auditoría               >
+```
+
+No necesita dashboard complejo.
+
+---
+
+# 26. Controlador
+
+La experiencia del controlador será extremadamente sencilla.
+
+Inicio:
+
+```text
+PisoClaro
+
+Resumen de convivencia
+
+Semana
+19 - 25 septiembre
+
+┌─────────────────────────────┐
+│ ⚠ Faltas                    │
+│                             │
+│ 3 pendientes                │
+│                         >   │
+└─────────────────────────────┘
+
+┌─────────────────────────────┐
+│ 💬 Quejas                   │
+│                             │
+│ 2 esta semana               │
+│                         >   │
+└─────────────────────────────┘
+
+┌─────────────────────────────┐
+│ 🛏 Excepciones              │
+│                             │
+│ 1 pendiente                 │
+│                         >   │
+└─────────────────────────────┘
+```
+
+No habrá Compra, Casa ni Dinero.
+
+---
+
+# 27. Animaciones
+
+Serán discretas.
+
+Ejemplos:
+
+Al completar una tarea:
+
+**check + pequeña animación**
+
+Al registrar una falta:
+
+**confirmación suave**
+
+Al pagar una deuda:
+
+**actualización animada del balance**
+
+Duración aproximada:
+
+**150–250 ms**
+
+No utilizaremos animaciones decorativas largas.
+
+---
+
+# 28. Feedback táctil
+
+En Android podremos utilizar vibración/haptic feedback ligero en acciones importantes:
+
+- completar tarea;
+- registrar;
+- aprobar;
+- confirmar pago.
+
+Nunca será obligatorio.
+
+---
+
+# 29. Accesibilidad
+
+Los botones deberán tener al menos aproximadamente:
+
+**48 × 48 dp**
+
+No se dependerá únicamente del color para representar estados.
+
+Ejemplo:
+
+No solo:
+
+🟢
+
+sino:
+
+**✓ Aprobada**
+
+---
+
+# 30. Diseño responsive
+
+Aunque inicialmente sea Android, la interfaz se diseñará para funcionar correctamente en diferentes tamaños de pantalla.
+
+Se utilizará principalmente:
+
+**scroll vertical**
+
+y se evitarán anchos fijos.
+
+---
+
+# 31. Principios UX
+
+Antes de añadir cualquier elemento visual aplicaremos estas reglas:
+
+**¿El usuario necesita verlo ahora?**
+
+Si no → se oculta en una pantalla secundaria.
+
+**¿Puede hacerse con menos pasos?**
+
+Si sí → se simplifica.
+
+**¿Una persona entiende qué ocurrirá al pulsarlo?**
+
+Si no → se cambia el texto.
+
+---
+
+# 32. Estilo final
+
+PisoClaro tendrá un aspecto:
+
+**Minimalista**
+
+pero no vacío.
+
+**Moderno**
+
+pero no futurista.
+
+**Serio**
+
+pero no empresarial.
+
+**Amigable**
+
+pero no infantil.
+
+Visualmente estará más cerca de una aplicación moderna de productividad y finanzas personales que de una aplicación de control o vigilancia.
+
+---
+
+# 33. Design system inicial
+
+La aplicación tendrá componentes reutilizables:
+
+**AppButton**
+
+Botones.
+
+**AppCard**
+
+Tarjetas.
+
+**AppInput**
+
+Campos.
+
+**AppSelect**
+
+Selectores.
+
+**StatusBadge**
+
+Estados.
+
+**UserAvatar**
+
+Usuarios.
+
+**EmptyState**
+
+Pantallas sin datos.
+
+**ConfirmationModal**
+
+Confirmaciones.
+
+**BottomNavigation**
+
+Navegación.
+
+**AppHeader**
+
+Cabecera.
+
+Esto permitirá que toda la aplicación mantenga exactamente el mismo lenguaje visual.
+
+---
+
+# 34. Diseño visual definitivo provisional
+
+### Nombre
+
+**PisoClaro**
+
+### Color principal
+
+**#4F46E5**
+
+### Tipografía
+
+**Inter**
+
+### Iconografía
+
+**Lucide**
+
+### Fondo claro
+
+**#F8FAFC**
+
+### Fondo oscuro
+
+**#0F172A**
+
+### Bordes de tarjetas
+
+**16 px**
+
+### Navegación
+
+**5 pestañas inferiores**
+
+### Estilo
+
+**Dashboard doméstico moderno**
+
+### Logo
+
+**Casa + check**
