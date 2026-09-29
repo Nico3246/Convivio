@@ -232,4 +232,4 @@ El proyecto está planteado para mantenerse dentro de las cuotas gratuitas de lo
 
 ## Estado del proyecto
 
-Convivio continúa evolucionando mediante pruebas reales y ajustes de interfaz y funcionamiento. La versión actual ya dispone de infraestructura cloud, autenticación y compilación Android, pero siguen siendo necesarias pruebas de extremo a extremo para considerar completamente validadas todas las integraciones y situaciones límite.
+Convivio continúa evolucionando mediante pruebas reales y ajustes de interfaz y funcionamiento. La versión actual ya dispone de infraestructura cloud, autenticación y compilación Android.
