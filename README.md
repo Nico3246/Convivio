@@ -1,69 +1,235 @@
 # Convivio · 0.2.0
 
-Aplicación Android privada para dos residentes y un controlador. Esta entrega incorpora las interfaces aprobadas y las conecta a las operaciones del servidor.
+**Convivio** es una aplicación Android de gestión de convivencia para un piso formado por **dos residentes** y un **controlador externo**. El proyecto centraliza normas, faltas y quejas, tareas, inventarios, gastos e informes semanales, aplicando permisos distintos según el rol de cada usuario.
 
-## Incluido
+El código se publica como proyecto personal, aunque la aplicación está diseñada para un entorno de uso privado y controlado.
 
-- Acceso con Google y PKCE, sesión en almacenamiento seguro y navegación según el rol inmutable.
-- Normas y propuestas con aprobación del controlador; faltas, pruebas, comentarios, filtros y estadísticas; quejas y excepciones con dos aprobaciones.
-- Calendario, tareas periódicas, rotación, turnos de ducha, edición e intercambio.
-- Inventarios y listas personales, compartidas y del hogar; cantidades y compra con incorporación opcional al inventario.
-- Gastos de uno o dos participantes, céntimos exactos, deudas, pagos parciales, liquidación y correcciones con historial.
-- Informes semanales, saldos al cierre, turnos versionados y referencias que respetan el borrado definitivo.
-- Administración, autorización de cuentas nuevas, bajas, eliminación del piso, auditoría, temas y bandeja de notificaciones.
-- Selección y compresión de imágenes, subida privada, notificaciones Expo/FCM y procesos reintentables de limpieza.
-- Dieciséis migraciones SQL, permisos explícitos, tipos generados, pruebas y configuración de CI.
+## Estado actual
 
-**El código todavía requiere conectar los servicios y validarlo en un móvil.** No se ha generado una APK ni desplegado Supabase. Las pruebas locales de formularios y PostgreSQL no sustituyen la prueba de Google, cámara, Storage y notificaciones reales.
+Convivio se encuentra en una fase funcional de pruebas reales:
 
-## Ejecutar las comprobaciones
+- proyecto Supabase configurado y conectado;
+- autenticación con Google integrada mediante Supabase;
+- aplicación probada en un dispositivo Android real;
+- navegación y acceso según rol comprobados durante las pruebas móviles;
+- configuración Android preparada para desarrollo y producción;
+- compilaciones mediante Expo Application Services (EAS);
+- perfil de producción configurado para generar un **Android App Bundle (AAB)**;
+- pruebas automatizadas, comprobaciones de tipos, lint y validaciones de base de datos incluidas en el proyecto.
 
-Con Node.js 24 y la carpeta descomprimida:
+La aplicación continúa en desarrollo y validación. La existencia de pruebas automatizadas y pruebas reales en Android no implica que todos los escenarios de Auth, Storage, notificaciones, concurrencia o borrado remoto estén certificados de extremo a extremo.
 
-```sh
+## Roles
+
+Convivio trabaja con tres usuarios y roles fijos:
+
+- **Residente administrador:** vive en el piso y administra su configuración y normas.
+- **Residente:** segundo miembro del piso, con acceso a las funciones de convivencia correspondientes.
+- **Controlador:** usuario externo que supervisa la información que le corresponde y recibe los informes definidos por el sistema.
+
+Un usuario no puede actuar simultáneamente como residente y controlador.
+
+## Funcionalidades
+
+### Convivencia
+
+- Normas del piso.
+- Registro de faltas y pruebas.
+- Quejas y comentarios.
+- Excepciones y procesos de aprobación.
+- Historial de correcciones.
+- Calendario semanal.
+- Tareas periódicas y rotaciones.
+- Turnos de ducha.
+
+### Organización doméstica
+
+- Inventarios personales y compartidos.
+- Listas de compra.
+- Cantidades y actualización de productos.
+- Incorporación de compras al inventario.
+
+### Economía
+
+- Gastos entre residentes.
+- Importes almacenados en céntimos.
+- Reparto entre uno o dos participantes.
+- Cálculo de deudas.
+- Pagos parciales y liquidaciones.
+- Correcciones conservando el historial.
+- Saldos asociados a los cierres de los informes.
+
+### Informes y administración
+
+- Informes semanales.
+- Administración de miembros.
+- Autorización de nuevas cuentas.
+- Baja de usuarios.
+- Eliminación del piso cuando se da de baja el administrador.
+- Auditoría e historial.
+- Bandeja de notificaciones.
+- Procesos de limpieza y reintento.
+
+### Multimedia y notificaciones
+
+- Selección de imágenes.
+- Compresión antes de la subida.
+- Almacenamiento privado.
+- Integración con Expo Notifications y FCM.
+- Registro de dispositivos y gestión de entregas.
+
+## Tecnologías
+
+- **TypeScript**
+- **React Native**
+- **Expo 57**
+- **Expo Router**
+- **Supabase**
+- **PostgreSQL**
+- **Supabase Auth**
+- **Supabase Storage**
+- **Google OAuth**
+- **TanStack Query**
+- **Zod**
+- **Vitest**
+- **PGlite**
+- **Expo Application Services (EAS)**
+- **Firebase Cloud Messaging (FCM)**
+
+## Estructura principal
+
+```text
+Convivio/
+├── app/                 # Navegación y rutas Expo Router
+├── assets/              # Recursos gráficos
+├── docs/                # Requisitos, decisiones y documentación técnica
+├── scripts/             # Utilidades y generación de tipos
+├── src/
+│   ├── features/        # Funcionalidades organizadas por dominio
+│   └── services/        # Acceso a servicios y base de datos
+├── supabase/            # Migraciones y funciones de servidor
+├── tests/               # Pruebas automatizadas
+├── vendor/              # Dependencia adaptada y documentada
+├── app.config.ts
+├── eas.json
+└── package.json
+```
+
+## Instalación
+
+Requiere Node.js compatible con la versión indicada en `package.json`.
+
+```bash
+git clone https://github.com/Nico3246/Convivio.git
+cd Convivio
 npm ci
+```
+
+Copia el archivo de ejemplo de variables de entorno:
+
+```bash
+cp .env.example .env
+```
+
+y configura los valores correspondientes a tu entorno.
+
+## Variables de configuración
+
+| Variable | Uso |
+| --- | --- |
+| `EXPO_PUBLIC_SUPABASE_URL` | URL pública del proyecto Supabase |
+| `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Clave pública de Supabase |
+| `EXPO_PUBLIC_ENVIRONMENT` | Entorno `development` o `production` |
+| `EXPO_PUBLIC_EAS_PROJECT_ID` | Proyecto de Expo/EAS |
+| `GOOGLE_SERVICES_JSON` | Ruta al archivo de configuración Firebase para Android |
+| `CONVIVIO_WORKER_SECRET` | Secreto exclusivo del servidor/Vault |
+| `EXPO_ACCESS_TOKEN` | Token opcional para proteger el servicio push de Expo |
+
+Los secretos del servidor y las credenciales privadas no deben incluirse en variables `EXPO_PUBLIC_*` ni subirse al repositorio.
+
+## Desarrollo en Android
+
+Para ejecutar una compilación de desarrollo en Android:
+
+```bash
+npm run android
+```
+
+Para iniciar posteriormente el servidor de desarrollo:
+
+```bash
+npm start
+```
+
+El identificador Android depende del entorno:
+
+- desarrollo: `app.convivio.mobile.dev`;
+- producción: `app.convivio.mobile`.
+
+## Compilaciones con EAS
+
+El archivo `eas.json` incluye tres perfiles:
+
+- **development:** APK con development client;
+- **preview:** APK de distribución interna;
+- **production:** Android App Bundle (AAB).
+
+Ejemplo de compilación de producción:
+
+```bash
+npx eas-cli@latest build --platform android --profile production
+```
+
+## Comprobaciones del proyecto
+
+```bash
 npm run verify
 npm run format:check
 npm run build:check
 ```
 
-`verify` comprueba tipos, lint y pruebas. `build:check` exporta JavaScript/Hermes y recursos Android; no compila una APK. Si la consulta de metadatos de Expo no está disponible, se puede exportar con `EXPO_OFFLINE=1`. Esto no habilita escrituras sin conexión en Convivio.
+`verify` ejecuta comprobación de tipos, lint y pruebas.
 
-No hace falta Docker para estas pruebas: PGlite ejecuta las migraciones SQL. Auth, Storage y componentes nativos se sustituyen en las pruebas por entornos controlados; sus servicios reales están pendientes de validar.
+Las migraciones pueden comprobarse localmente mediante PGlite, por lo que no es necesario disponer de Docker para ejecutar la suite automatizada.
 
-Después de cambiar una migración:
+Después de modificar una migración:
 
-```sh
+```bash
 npm run types:db
 npm run verify
 ```
 
-El archivo generado `src/services/database.types.ts` no se modifica manualmente.
+El archivo generado `src/services/database.types.ts` no debe modificarse manualmente.
 
-## Preparar la prueba en Android
+## Base de datos y seguridad
 
-Sigue [la guía de puesta en marcha](docs/PUESTA_EN_MARCHA.md). Requiere un proyecto Supabase dedicado, Google OAuth, configuración de notificaciones y un development build de Android.
+La lógica de persistencia se apoya en PostgreSQL y Supabase. El proyecto incluye migraciones, funciones de servidor, políticas y comprobaciones específicas para:
 
-La configuración incluida utiliza estos nombres:
+- separación entre pisos;
+- permisos por rol;
+- privacidad de los registros personales;
+- correcciones con conservación del original;
+- informes y cierres económicos;
+- eliminación de información asociada a bajas;
+- operaciones de mantenimiento reservadas al servidor.
 
-| Variable                               | Dónde se utiliza                                               |
-| -------------------------------------- | -------------------------------------------------------------- |
-| `EXPO_PUBLIC_SUPABASE_URL`             | App: URL del proyecto                                          |
-| `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | App: clave pública                                             |
-| `EXPO_PUBLIC_ENVIRONMENT`              | App: `development` o `production`                              |
-| `EXPO_PUBLIC_EAS_PROJECT_ID`           | App: proyecto de Expo para push                                |
-| `GOOGLE_SERVICES_JSON`                 | Compilación: ruta al archivo de configuración Firebase Android |
-| `CONVIVIO_WORKER_SECRET`               | Solo servidor y Vault                                          |
-| `EXPO_ACCESS_TOKEN`                    | Solo servidor, cuando se protege el servicio push de Expo      |
+La configuración privilegiada permanece fuera del código cliente.
 
-El identificador Android de desarrollo es `app.convivio.mobile.dev`; el de producción, `app.convivio.mobile`. La cuenta de servicio FCM se configura en EAS, no en la app ni en este repositorio.
+## Documentación
 
-## Estado de validación
+La carpeta `docs/` contiene la documentación detallada del proyecto:
 
-Los resultados y límites están en [VALIDACION.md](docs/VALIDACION.md). Las pruebas críticas cubren permisos de cada rol, registros personales, correcciones, reportes, borrados, concurrencia, reintentos y formularios aprobados.
+- `PUESTA_EN_MARCHA.md`: configuración completa del entorno;
+- `VALIDACION.md`: pruebas y validaciones técnicas realizadas en la versión documentada;
+- `DECISIONES.md`: decisiones funcionales y aclaraciones aprobadas;
+- `originales/`: requisitos originales conservados como referencia.
 
-No se ha publicado en GitHub, creado una cuenta cloud ni contratado servicios. La CI está preparada para ejecutarse al subir el proyecto a un repositorio.
+> **Nota:** algunos documentos de validación reflejan el estado en la fecha en la que fueron redactados. Desde entonces el proyecto se ha conectado a servicios reales, se ha probado en Android y se han realizado compilaciones mediante EAS.
 
-El objetivo sigue siendo 0 €/mes dentro de las cuotas gratuitas, sin copias propias de datos. No actives servicios de pago para completar la instalación. El proyecto mantiene la adaptación de dependencia de `vendor/decode-uri-component`, necesaria para `npm ci` y documentada en esa carpeta.
+## Coste
 
-Los requisitos originales se conservan sin cambios en `docs/originales`. Las aclaraciones y aprobaciones de [DECISIONES.md](docs/DECISIONES.md) tienen precedencia.
+El proyecto está planteado para mantenerse dentro de las cuotas gratuitas de los servicios utilizados siempre que el volumen de uso lo permita. No requiere contratar servicios de pago para su entorno previsto de pruebas y uso limitado.
+
+## Estado del proyecto
+
+Convivio continúa evolucionando mediante pruebas reales y ajustes de interfaz y funcionamiento. La versión actual ya dispone de infraestructura cloud, autenticación y compilación Android, pero siguen siendo necesarias pruebas de extremo a extremo para considerar completamente validadas todas las integraciones y situaciones límite.
